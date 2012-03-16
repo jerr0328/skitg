@@ -4,6 +4,8 @@
 package edu.ucf.cop4331.skitg;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
 
 /**
  * @author Jeremy Mayeres
@@ -55,8 +57,8 @@ public class Skitg implements ApplicationListener {
 	 */
 	@Override
 	public void resize(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-
+		Gdx.gl.glClearColor(0, 0, 1, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 	}
 
 	/**
@@ -67,5 +69,4 @@ public class Skitg implements ApplicationListener {
 		// TODO Auto-generated method stub
 
 	}
-	/**Chicken butt**/
 }

@@ -8,7 +8,6 @@ import com.badlogic.gdx.backends.jogl.JoglApplication;
 /**
  * @author Jeremy Mayeres
  * Starts the game for the desktop version\
- * l;sdffjasdl
  */
 public class DesktopStarter {
 
