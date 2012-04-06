@@ -69,10 +69,18 @@ public class Tank {
 		}
 	}
 	
+	/**
+	 * Register a hit by the weapon
+	 * @param weapon Weapon hitting the tank
+	 */
 	public void hit(Weapon weapon){
 		
 	}
 	
+	/**
+	 * Update the tank
+	 * @param delta Time elapsed
+	 */
 	public void update(float delta){
 		
 	}
