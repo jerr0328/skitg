@@ -41,9 +41,10 @@ public class Engine {
 		
 		// Begin rendering sprites in order from back to front
 		batch.begin();
-		map.render(batch);
-		tank1.render(batch);
-		tank2.render(batch);
+		//Drawing using the map.render() function didn't work. It's because somehow the batch.end() was being called before it or something (according to the error). This error also comes up when I uncomment the tank lines below
+		batch.draw(map.region, 0, 0);
+		//tank1.render(batch);
+		//tank2.render(batch);
 		batch.end();
 	}
 	
