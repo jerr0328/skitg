@@ -1,17 +1,16 @@
-package edu.ucf.cop4331.skitg;
+package edu.ucf.cop4331.skitg.weapons;
 import java.awt.*;
 import javax.swing.ImageIcon;
-
+import com.badlogic.gdx.Gdx;
 
 
 public class Bullet 
 {
 	
 	int x, y;
+	double v;
 	Image img;
 	boolean visible;
-	
-	
 	
 	public int getX()
 	{
@@ -47,7 +46,6 @@ public class Bullet
 	//Use Physics functions to make the bullets move.
 	public void move()
 	{
-		
 		
 		
 	}

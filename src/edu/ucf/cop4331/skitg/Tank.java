@@ -112,5 +112,17 @@ public class Tank {
 		}
 		return false;
 	}
+	
+	/**
+	 * Get the position of the tank
+	 * @return
+	 */
+	public Vector2 getPosition(){
+		return position;
+	}
+	
+	public int getPower(){
+		return power;
+	}
 
 }
