@@ -61,7 +61,8 @@ public class Tank {
 	 * If this is the second tank, the tank is in the receiving state, angle is 120, color is red.
 	 * @param first True if this the first tank. False if this the second tank.
 	 */
-	public Tank(boolean first){
+	public Tank(TextureRegion tex, boolean first){
+		this.tex = tex;
 		if(!first){
 			state = RECEIVING;
 			angle = 120;

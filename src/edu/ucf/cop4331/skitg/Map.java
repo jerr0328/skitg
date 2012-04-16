@@ -45,7 +45,7 @@ public class Map {
 	 */
 	
 	public void render(SpriteBatch batch){
-
+		batch.draw(region, 0, 0);
 	}
 	
 	/**

@@ -56,8 +56,12 @@ public class Engine {
 	public Engine(){
 		loadTextures();
 		
-		tank1 = new Tank(true);
-		tank2 = new Tank(false);
+		tank1 = new Tank(texTank, true);
+		tank2 = new Tank(texTank, false);
+		
+		angle = new UISpinner(texArrow,font,"Angle",60,360,0,0);
+		power = new UISpinner(texArrow,font,"Power",50,100,200,0);
+		// Probably need a different UI element for moving
 		
 		map = new Map();
 		
@@ -84,10 +88,13 @@ public class Engine {
 		
 		// Begin rendering sprites in order from back to front
 		batch.begin();
-		//Drawing using the map.render() function didn't work. It's because somehow the batch.end() was being called before it or something (according to the error). This error also comes up when I uncomment the tank lines below
-		batch.draw(map.region, 0, 0);
+		map.render(batch);
+		// Tank rendering not fully implemented yet
 		//tank1.render(batch);
 		//tank2.render(batch);
+		// UI rendering not fully implemented yet
+		//angle.render(batch);
+		//power.render(batch);
 		batch.end();
 	}
 	
@@ -95,7 +102,7 @@ public class Engine {
 	 * Load the textures, initialize the TextureRegions
 	 */
 	private void loadTextures(){
-		texture = new Texture(Gdx.files.internal("assets/png.png"));
+		//texture = new Texture(Gdx.files.internal("assets/png.png"));
 		// TODO: Set up each TextureRegion
 	}
 	

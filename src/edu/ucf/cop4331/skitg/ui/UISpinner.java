@@ -1,5 +1,6 @@
 package edu.ucf.cop4331.skitg.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -37,9 +38,16 @@ public class UISpinner {
 	}
 	
 	public void render(SpriteBatch batch){
+		if(enabled){
+			batch.setColor(Color.GREEN);
+		}
+		else{
+			font.setColor(1, 1, 1, 0.5f);
+		}
 		batch.draw(arrow,x,y); // Draw left arrow
-		// TODO: Write out the text
+		font.draw(batch, text+": "+value, x+16, y);
 		batch.draw(arrow,x+180,y,0,0,8,16,1,1,180); // Draw right arrow
+		batch.setColor(Color.WHITE);
 	}
 	
 	public void update(float delta){
