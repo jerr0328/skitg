@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import edu.ucf.cop4331.skitg.ui.UISpinner;
 
@@ -25,10 +26,6 @@ public class Engine {
 	private SpriteBatch batch;
 	// True if Tank 1 is up, False is Tank 2 is up
 	private boolean tank1active = true;
-	// Texture file
-	private Texture texture;
-	// Font
-	private BitmapFont font;
 	// Angle UI element
 	private UISpinner angle;
 	// Power UI element
@@ -36,17 +33,35 @@ public class Engine {
 	// Moves UI element
 	private UISpinner moves;
 	
+	// Texture stuff
+	
+	// Texture file
+	private Texture texture;
+	// Arrow
+	private TextureRegion texArrow;
+	// Cannon
+	private TextureRegion texCannon;
+	// Fire Button
+	private TextureRegion texFireButton;
+	// Tank
+	private TextureRegion texTank;
+	// Weapons
+	private TextureRegion[] texWeapons;
+	// Font
+	private BitmapFont font;
+	
 	/**
 	 * Initialize engine
 	 */
 	public Engine(){
+		loadTextures();
+		
 		tank1 = new Tank(true);
 		tank2 = new Tank(false);
 		
 		map = new Map();
 		
 		batch = new SpriteBatch();
-		
 	}
 	
 	/**
@@ -74,6 +89,14 @@ public class Engine {
 		//tank1.render(batch);
 		//tank2.render(batch);
 		batch.end();
+	}
+	
+	/**
+	 * Load the textures, initialize the TextureRegions
+	 */
+	private void loadTextures(){
+		texture = new Texture(Gdx.files.internal("assets/png.png"));
+		// TODO: Set up each TextureRegion
 	}
 	
 }
