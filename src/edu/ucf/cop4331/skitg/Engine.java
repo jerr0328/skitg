@@ -50,16 +50,19 @@ public class Engine {
 	// Font
 	private BitmapFont font;
 	
+	// Temporary variables to prevent too much garbage
+	private int tempAngle, tempPower;
+	
 	/**
 	 * Initialize engine
 	 */
 	public Engine(){
 		loadTextures();
 		
-		tank1 = new Tank(texTank, true);
-		tank2 = new Tank(texTank, false);
+		tank1 = new Tank(texTank, true, 100, 300);
+		tank2 = new Tank(texTank, false, 700, 300);
 		
-		angle = new UISpinner(texArrow,font,"Angle",60,360,0,0);
+		angle = new UISpinner(texArrow,font,"Angle",60,360,50,0);
 		power = new UISpinner(texArrow,font,"Power",50,100,200,0);
 		// Probably need a different UI element for moving
 		
@@ -73,6 +76,8 @@ public class Engine {
 	 * @param delta Time elapsed
 	 */
 	public void update(float delta){
+		// TODO: If we're changing from player 1 to player 2, update the UI
+		// TODO: If the player pressed a button, we need to update that value
 		tank1.update(delta);
 		tank2.update(delta);
 		map.update(delta);
@@ -90,11 +95,11 @@ public class Engine {
 		batch.begin();
 		map.render(batch);
 		// Tank rendering not fully implemented yet
-		//tank1.render(batch);
-		//tank2.render(batch);
+		tank1.render(batch);
+		tank2.render(batch);
 		// UI rendering not fully implemented yet
-		//angle.render(batch);
-		//power.render(batch);
+		angle.render(batch);
+		power.render(batch);
 		batch.end();
 	}
 	
@@ -102,8 +107,15 @@ public class Engine {
 	 * Load the textures, initialize the TextureRegions
 	 */
 	private void loadTextures(){
-		//texture = new Texture(Gdx.files.internal("assets/png.png"));
-		// TODO: Set up each TextureRegion
+		texture = new Texture(Gdx.files.internal("assets/png.png"));
+		texFireButton = new TextureRegion(texture, 0, 0, 64, 16);
+		texArrow = new TextureRegion(texture, 65, 0, 8, 16);
+		texTank = new TextureRegion(texture, 83, 0, 32, 16);
+		texCannon = new TextureRegion(texture, 159, 0, 16, 8);
+		// TODO: Set up weapons
+		
+		font = new BitmapFont(Gdx.files.internal("assets/arial12.fnt"),
+		         Gdx.files.internal("assets/arial12.png"), false);
 	}
 	
 }

@@ -39,14 +39,15 @@ public class UISpinner {
 	
 	public void render(SpriteBatch batch){
 		if(enabled){
-			batch.setColor(Color.GREEN);
+			batch.setColor(Color.BLUE);
+			font.setColor(1, 1, 1, 1);
 		}
 		else{
 			font.setColor(1, 1, 1, 0.5f);
 		}
-		batch.draw(arrow,x,y); // Draw left arrow
-		font.draw(batch, text+": "+value, x+16, y);
-		batch.draw(arrow,x+180,y,0,0,8,16,1,1,180); // Draw right arrow
+		batch.draw(arrow,x,y,4,8,8,16,1,1,180); // Draw left arrow
+		font.draw(batch, text+": "+value, x+16, y+14);
+		batch.draw(arrow,x+80,y-1); // Draw right arrow
 		batch.setColor(Color.WHITE);
 	}
 	
