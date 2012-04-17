@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -53,6 +54,8 @@ public class Tank {
 	private Color color = Color.BLUE;
 	// Index of active weapon
 	private int activeWeapon;
+	//The rotation of the tank
+	private float slope;
 	
 	/**
 	 * Initialize a tank with a flag for if this is the first tank.
@@ -60,9 +63,10 @@ public class Tank {
 	 * If this is the second tank, the tank is in the receiving state, angle is 120, color is red.
 	 * @param first True if this the first tank. False if this the second tank.
 	 */
-	public Tank(TextureRegion tex, TextureRegion[] weaponsTex, boolean first, int x, int y){
+	public Tank(TextureRegion tex, TextureRegion[] weaponsTex, boolean first, int x, int y, float slope){
 		this.tex = tex;
 		this.position = new Vector2(x,y);
+		this.slope = slope;
 		if(!first){
 			state = RECEIVING;
 			angle = 120;
@@ -96,9 +100,11 @@ public class Tank {
 	 */
 	public void render(SpriteBatch batch){
 		batch.setColor(color);
-		batch.draw(tex, position.x, position.y);
-		
-		//batch.draw(tex, position.x, position.y, 0, 0, 16, 32, 1, 1, map.getAngle(position.x), true); //To rotate tank depending on its position on the map
+		//batch.draw(tex, position.x, position.y);
+		//System.out.println("Slope: " + slope*MathUtils.radiansToDegrees);
+		//0 degrees - Vertical
+		//90 degrees- Horizontal
+		batch.draw(tex, position.x, position.y, 0, 0, 16, 32, 1, 1, slope, false); //To rotate tank depending on its position on the map
 		batch.setColor(Color.WHITE);
 	}
 	

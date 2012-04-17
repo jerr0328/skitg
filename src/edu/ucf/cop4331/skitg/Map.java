@@ -49,20 +49,31 @@ public class Map {
 	}
 	
 	/**
-	 * Randomly generates the terrain.
-	 * Values should not be too low (shouldn't have points on the ground)
-	 * nor should they be too high (where it reaches the top of the screen).
-	 * Additionally, values should be smoothed so the terrain isn't too "rough"
+	 * 
+	 * @param x
+	 * @return the y coordinate at given x
 	 */
-	
 	public int getHeight(int x){
 		return peaks[x];
 	}
 	
-	public int getSlope(int x){
-		return (int)(peaks[x-1] - peaks[x+1])/(x-1 - x+1);
+	/**
+	 * 
+	 * @param x - the x position that we are looking for an angle for
+	 * @return - The angle
+	 */
+	public float getAngle(int x){
+		float angle = MathUtils.atan2(peaks[x-1] - peaks[x+1], 2);
+		System.out.println(angle*MathUtils.radiansToDegrees);
+		return angle*MathUtils.radiansToDegrees;
 	}
 	
+	/**
+	 * Randomly generates the terrain.
+	 * Values should not be too low (shouldn't have points on the ground)
+	 * nor should they be too high (where it reaches the top of the screen).
+	 * Additionally, values should be smoothed so the terrain isn't too "rough"
+	 */	
 	private void generateTerrain(){
 		
 		//Generates a random float between .5 and .9 which I found to be good ranges
@@ -79,7 +90,7 @@ public class Map {
 		//C is a random number which shifts the graph over horizontally
 		//D shifts the graph vertically so that it doesn't touch the floor
 		for(int i = 0; i < peaks.length; i++){
-			peaks[i] = (int)(MathUtils.sinDeg((float) ((randomB * i ) + randomC*Skitg.WIDTH))*.25*Skitg.HEIGHT + .4*Skitg.HEIGHT); // TODO: Generate random terrain
+			peaks[i] = (int)(MathUtils.sinDeg((float) ((randomB * i ) + randomC*Skitg.WIDTH))*.25*Skitg.HEIGHT + .4*Skitg.HEIGHT);
 		}
 		
 		//New Pixmap with the width and height of the screen. No idea what RGB8888 means lol
