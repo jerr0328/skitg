@@ -97,6 +97,8 @@ public class Tank {
 	public void render(SpriteBatch batch){
 		batch.setColor(color);
 		batch.draw(tex, position.x, position.y);
+		
+		//batch.draw(tex, position.x, position.y, 0, 0, 16, 32, 1, 1, map.getAngle(position.x), true); //To rotate tank depending on its position on the map
 		batch.setColor(Color.WHITE);
 	}
 	

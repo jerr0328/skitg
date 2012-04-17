@@ -54,6 +54,15 @@ public class Map {
 	 * nor should they be too high (where it reaches the top of the screen).
 	 * Additionally, values should be smoothed so the terrain isn't too "rough"
 	 */
+	
+	public int getHeight(int x){
+		return peaks[x];
+	}
+	
+	public int getSlope(int x){
+		return (int)(peaks[x-1] - peaks[x+1])/(x-1 - x+1);
+	}
+	
 	private void generateTerrain(){
 		
 		//Generates a random float between .5 and .9 which I found to be good ranges

@@ -65,16 +65,16 @@ public class Engine {
 	public Engine(){
 		loadTextures();
 		
-		tank1 = new Tank(texTank, texWeapons, true, 100, 300);
-		tank2 = new Tank(texTank, texWeapons, false, 700, 300);
+		map = new Map();
+		
+		tank1 = new Tank(texTank, texWeapons, true, 100, map.getHeight(100-16));
+		tank2 = new Tank(texTank, texWeapons, false, 700, map.getHeight(700+32));
 		
 		angle = new UISpinner(texArrow,font,"Angle",60,360,50,0);
 		power = new UISpinner(texArrow,font,"Power",50,100,200,0);
 		// Probably need a different UI element for moving
 		fire = new UIFireButton(texFireButton,400,0);
 		weaponSelector = new UIWeaponSelector(texArrow,font,500,0,tank1.getWeapons());
-		
-		map = new Map();
 		
 		batch = new SpriteBatch();
 	}
