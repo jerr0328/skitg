@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import edu.ucf.cop4331.skitg.ui.UIFireButton;
 import edu.ucf.cop4331.skitg.ui.UISpinner;
 
 /**
@@ -31,7 +32,9 @@ public class Engine {
 	// Power UI element
 	private UISpinner power;
 	// Moves UI element
-	private UISpinner moves;
+	//private UISpinner moves;
+	// Fire Button UI element
+	private UIFireButton fire;
 	
 	// Texture stuff
 	
@@ -65,6 +68,7 @@ public class Engine {
 		angle = new UISpinner(texArrow,font,"Angle",60,360,50,0);
 		power = new UISpinner(texArrow,font,"Power",50,100,200,0);
 		// Probably need a different UI element for moving
+		fire = new UIFireButton(texFireButton,400,0);
 		
 		map = new Map();
 		
@@ -88,8 +92,7 @@ public class Engine {
 	 * @param delta Time elapsed
 	 */
 	public void render(float delta){
-		GL10 gl = Gdx.graphics.getGL10();
-		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		// Begin rendering sprites in order from back to front
 		batch.begin();
@@ -100,6 +103,7 @@ public class Engine {
 		// UI rendering not fully implemented yet
 		angle.render(batch);
 		power.render(batch);
+		fire.render(batch);
 		batch.end();
 	}
 	
