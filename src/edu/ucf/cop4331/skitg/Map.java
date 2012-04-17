@@ -83,9 +83,12 @@ public class Map {
 		//Since it is larger than the pixmap, it needs to wrap around the edges
 		texture.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
 		
+		//Blue
+		pixmap.setColor(0.0f, 1.0f, 1.0f, 1.0f);
+		pixmap.fillRectangle(0, 0, Skitg.WIDTH, Skitg.HEIGHT);
+		
 		//Green
 		pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
-		
 		//Loops through the array, drawing line by line 
 		for(int i=0; i<peaks.length; i++)
 			pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
