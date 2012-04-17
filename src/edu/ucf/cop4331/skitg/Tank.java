@@ -1,5 +1,6 @@
 package edu.ucf.cop4331.skitg;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
@@ -8,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import edu.ucf.cop4331.skitg.weapons.Weapon;
+import edu.ucf.cop4331.skitg.weapons.*;
 
 public class Tank {
 	
@@ -50,10 +51,8 @@ public class Tank {
 	private int state = WAITING;
 	// Tank color
 	private Color color = Color.BLUE;
-	
-	public Tank(){
-		
-	}
+	// Index of active weapon
+	private int activeWeapon;
 	
 	/**
 	 * Initialize a tank with a flag for if this is the first tank.
@@ -61,7 +60,7 @@ public class Tank {
 	 * If this is the second tank, the tank is in the receiving state, angle is 120, color is red.
 	 * @param first True if this the first tank. False if this the second tank.
 	 */
-	public Tank(TextureRegion tex, boolean first, int x, int y){
+	public Tank(TextureRegion tex, TextureRegion[] weaponsTex, boolean first, int x, int y){
 		this.tex = tex;
 		this.position = new Vector2(x,y);
 		if(!first){
@@ -69,6 +68,10 @@ public class Tank {
 			angle = 120;
 			color = Color.RED;
 		}
+		
+		// TODO: Load ALL the weapons!
+		weapons = new ArrayList<Weapon>(5);
+		weapons.add(new BigShot(this, weaponsTex[0]));
 	}
 	
 	/**
@@ -125,6 +128,14 @@ public class Tank {
 	
 	public int getPower(){
 		return power;
+	}
+	
+	public List<Weapon> getWeapons(){
+		return weapons;
+	}
+	
+	public int getActiveWeapon(){
+		return activeWeapon;
 	}
 
 }

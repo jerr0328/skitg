@@ -7,9 +7,13 @@ import edu.ucf.cop4331.skitg.Tank;
 
 public class BigShot extends Weapon
 {
+	
+	private TextureRegion tex;
 
-	public BigShot(Tank shooter) {
+	public BigShot(Tank shooter, TextureRegion tex) {
 		super(shooter);
+		
+		this.tex = tex;
 		// TODO Auto-generated constructor stub
 	}
 

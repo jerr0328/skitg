@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import edu.ucf.cop4331.skitg.ui.UIFireButton;
 import edu.ucf.cop4331.skitg.ui.UISpinner;
+import edu.ucf.cop4331.skitg.ui.UIWeaponSelector;
 
 /**
  * Handles game logic and physics
@@ -35,6 +36,8 @@ public class Engine {
 	//private UISpinner moves;
 	// Fire Button UI element
 	private UIFireButton fire;
+	// Weapon selector
+	private UIWeaponSelector weaponSelector;
 	
 	// Texture stuff
 	
@@ -62,13 +65,14 @@ public class Engine {
 	public Engine(){
 		loadTextures();
 		
-		tank1 = new Tank(texTank, true, 100, 300);
-		tank2 = new Tank(texTank, false, 700, 300);
+		tank1 = new Tank(texTank, texWeapons, true, 100, 300);
+		tank2 = new Tank(texTank, texWeapons, false, 700, 300);
 		
 		angle = new UISpinner(texArrow,font,"Angle",60,360,50,0);
 		power = new UISpinner(texArrow,font,"Power",50,100,200,0);
 		// Probably need a different UI element for moving
 		fire = new UIFireButton(texFireButton,400,0);
+		weaponSelector = new UIWeaponSelector(texArrow,font,500,0,tank1.getWeapons());
 		
 		map = new Map();
 		
@@ -81,9 +85,15 @@ public class Engine {
 	 */
 	public void update(float delta){
 		// TODO: If we're changing from player 1 to player 2, update the UI
-		// TODO: If the player pressed a button, we need to update that value
+		angle.update(delta);
+		power.update(delta);
+		fire.update(delta);
+		weaponSelector.update(delta);
+		
+		// TODO: If the player pressed a button, we need to update that value in the tank
 		tank1.update(delta);
 		tank2.update(delta);
+		
 		map.update(delta);
 	}
 	
@@ -104,6 +114,7 @@ public class Engine {
 		angle.render(batch);
 		power.render(batch);
 		fire.render(batch);
+		weaponSelector.render(batch);
 		batch.end();
 	}
 	
@@ -116,7 +127,19 @@ public class Engine {
 		texArrow = new TextureRegion(texture, 65, 0, 8, 16);
 		texTank = new TextureRegion(texture, 83, 0, 32, 16);
 		texCannon = new TextureRegion(texture, 159, 0, 16, 8);
-		// TODO: Set up weapons
+		
+		// Set up weapons
+		texWeapons = new TextureRegion[5];
+		// BigShot
+		texWeapons[0] = new TextureRegion(texture,116,0,16,16);
+		// Shot
+		texWeapons[1] = new TextureRegion(texture,133,0,8,8);
+		// Sniper
+		texWeapons[2] = new TextureRegion(texture,142,0,4,4);
+		// Rocket
+		texWeapons[3] = new TextureRegion(texture,147,0,8,16);
+		// Laser
+		texWeapons[4] = new TextureRegion(texture,156,0,2,8);
 		
 		font = new BitmapFont(Gdx.files.internal("assets/arial12.fnt"),
 		         Gdx.files.internal("assets/arial12.png"), false);
