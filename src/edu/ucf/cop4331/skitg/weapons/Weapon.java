@@ -10,7 +10,7 @@ public abstract class Weapon {
 	
 	protected Vector2 position = new Vector2();
 	protected float velocity;
-	protected boolean shot = false;
+	protected boolean done = false;
 	protected Tank shooter;
 	protected float Gravity = -20.0f;
 	
@@ -18,6 +18,11 @@ public abstract class Weapon {
 	
 	public Weapon(Tank shooter){
 		this.shooter = shooter;
+	}
+	
+	
+	public boolean isDone(){
+		return done;
 	}
 	
 	/**
