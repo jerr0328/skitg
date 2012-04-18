@@ -88,39 +88,23 @@ public class Engine {
 		if(tank1active){
 			// If tank1's turn is done
 			if(tank1.getState() == Tank.RECEIVING){
-				angle.setValue(tank2.getAngle());
-				power.setValue(tank2.getPower());
-				moves.setValue(tank2.getMoves());
-				weaponSelector.setActiveWeapon(tank2.getActiveWeapon());
+				setUIValues(tank2);
+				setUIEnabled(true);
 				tank1active = false;
 			}
 			else if(tank1.getState() == Tank.WAITING){
-				tank1.setAngle(angle.getValue());
-				tank1.setPower(power.getValue());
-				// TODO: Handle move
-				tank1.setActiveWeapon(weaponSelector.getActiveWeapon());
-				if(fire.isPressed()){
-					tank1.fire();
-				}
+				updateTankValues(tank1);
 			}
 		}
 		else{
 			// If tank2's turn is done
 			if(tank2.getState() == Tank.RECEIVING){
-				angle.setValue(tank1.getAngle());
-				power.setValue(tank1.getPower());
-				moves.setValue(tank1.getMoves());
-				weaponSelector.setActiveWeapon(tank1.getActiveWeapon());
+				setUIValues(tank1);
+				setUIEnabled(true);
 				tank1active = true;
 			}
 			else if(tank2.getState() == Tank.WAITING){
-				tank2.setAngle(angle.getValue());
-				tank2.setPower(power.getValue());
-				// TODO: Handle move
-				tank2.setActiveWeapon(weaponSelector.getActiveWeapon());
-				if(fire.isPressed()){
-					tank2.fire();
-				}
+				updateTankValues(tank2);
 			}
 		}
 		angle.update(delta);
@@ -129,7 +113,6 @@ public class Engine {
 		moves.update(delta);
 		weaponSelector.update(delta);
 		
-		// TODO: If the player pressed a button, we need to update that value in the tank
 		tank1.update(delta);
 		tank2.update(delta);
 		
@@ -183,6 +166,44 @@ public class Engine {
 		
 		font = new BitmapFont(Gdx.files.internal("assets/arial12.fnt"),
 		         Gdx.files.internal("assets/arial12.png"), false);
+	}
+	
+	/**
+	 * Enabled or disables UI elements
+	 * @param flag True to enable, false to disable
+	 */
+	private void setUIEnabled(boolean flag){
+		angle.setEnabled(flag);
+		power.setEnabled(flag);
+		moves.setEnabled(flag);
+		fire.setEnabled(flag);
+		weaponSelector.setEnabled(flag);
+	}
+	
+	/**
+	 * Set the UI values to the values from the tank
+	 * @param tank Tank to get the values from
+	 */
+	private void setUIValues(Tank tank){
+		angle.setValue(tank.getAngle());
+		power.setValue(tank.getPower());
+		moves.setValue(tank.getMoves());
+		weaponSelector.setActiveWeapon(tank.getActiveWeapon());
+	}
+	
+	/**
+	 * Updates tank's values from the UI
+	 * @param tank Tank to update
+	 */
+	private void updateTankValues(Tank tank){
+		tank.setAngle(angle.getValue());
+		tank.setPower(power.getValue());
+		// TODO: Handle move
+		tank.setActiveWeapon(weaponSelector.getActiveWeapon());
+		if(fire.isPressed()){
+			setUIEnabled(false);
+			tank.fire();
+		}
 	}
 	
 }

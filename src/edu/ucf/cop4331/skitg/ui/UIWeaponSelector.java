@@ -77,5 +77,9 @@ public class UIWeaponSelector {
 		this.weapons = weapons;
 	}
 	
+	public void setEnabled(boolean flag){
+		this.enabled = flag;
+	}
+	
 	
 }
