@@ -29,7 +29,7 @@ public class UISpinner {
 	private boolean enabled = true;
 	// Font
 	private BitmapFont font;
-	
+	//Timer for update call
 	private float stateTime = 0;
 	
 	public UISpinner(TextureRegion arrow, BitmapFont font, String text, int value, int max, int x, int y){
@@ -61,21 +61,20 @@ public class UISpinner {
 		// Timer is set to like 0.3s, without timer it a single press by the user may increase/decrease value
 		// by many points.
 		if(Gdx.input.isTouched())
-		{
-			
-			
+		{						
 			float x0 = Gdx.input.getX(0); // (float)Gdx.graphics.getWidth()) * Skitg.HEIGHT;
 			float y0 = Skitg.HEIGHT - Gdx.input.getY(0); // (float)Gdx.graphics.getHeight()) * Skitg.WIDTH;
-		
-			System.out.println(x + " " + y + " " + x0 + " " + y0);
-			if(stateTime > 0.1f){
+					
+			if(stateTime > 0.1f)
+			{
 			
 				stateTime = 0;
 				
-			if(x0 > x && x0 < x+8 && y0 > y && y0 < y + 16 && value > 0)
-				value = value - 1;
-			else if(x0 > x+80 && x0 < x+88  && y0 > y && y0 < y + 16 && value < max)
-				value = value + 1;}
+				if(x0 > x && x0 < x+8 && y0 > y && y0 < y + 16 && value > 0)
+					value = value - 1;
+				else if(x0 > x+80 && x0 < x+88  && y0 > y && y0 < y + 16 && value < max)
+					value = value + 1;
+			}
 			
 			stateTime += delta;
 		}
