@@ -132,6 +132,7 @@ public class Tank {
 	 */
 	public void fire(){
 		// TODO: Fire weapon
+		weapons.get(activeWeapon).shoot();
 		state = SHOOTING;
 	}
 	
