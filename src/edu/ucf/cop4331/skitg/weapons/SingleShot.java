@@ -20,7 +20,7 @@ public class SingleShot extends Weapon
 	
 
 	
-	public SingleShot(Tank shooter, float x, float y, TextureRegion tex) {
+	public SingleShot(Tank shooter, TextureRegion tex) {
 		super(shooter);
 		
 		this.tex = tex;
@@ -60,7 +60,7 @@ public class SingleShot extends Weapon
 		
 		velocity = shooter.getPower() * .2f;
 		
-		position = shooter.getPosition().add(velocity, velocity);
+		position = shooter.getPosition().add(velocity * shooter.getAngle(), velocity * shooter.getAngle());
 		
 	}
 
