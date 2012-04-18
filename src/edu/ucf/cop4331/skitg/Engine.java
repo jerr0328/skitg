@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import edu.ucf.cop4331.skitg.ui.UIFireButton;
+import edu.ucf.cop4331.skitg.ui.UIMove;
 import edu.ucf.cop4331.skitg.ui.UISpinner;
 import edu.ucf.cop4331.skitg.ui.UIWeaponSelector;
 
@@ -33,7 +34,7 @@ public class Engine {
 	// Power UI element
 	private UISpinner power;
 	// Moves UI element
-	//private UISpinner moves;
+	private UIMove moves;
 	// Fire Button UI element
 	private UIFireButton fire;
 	// Weapon selector
@@ -70,9 +71,9 @@ public class Engine {
 		tank1 = new Tank(texTank, texWeapons, true, 100, map.getHeight(100-16), map.getAngle(100));
 		tank2 = new Tank(texTank, texWeapons, false, 700, map.getHeight(700+32), map.getAngle(700));
 		
-		angle = new UISpinner(texArrow,font,"Angle",60,360,50,0);
-		power = new UISpinner(texArrow,font,"Power",50,100,200,0);
-		// Probably need a different UI element for moving
+		angle = new UISpinner(texArrow,font,"Angle",60,360,25,0);
+		power = new UISpinner(texArrow,font,"Power",50,100,150,0);
+		moves = new UIMove(texArrow,font,4,275,0);
 		fire = new UIFireButton(texFireButton,400,0);
 		weaponSelector = new UIWeaponSelector(texArrow,font,500,0,tank1.getWeapons());
 		
@@ -84,10 +85,31 @@ public class Engine {
 	 * @param delta Time elapsed
 	 */
 	public void update(float delta){
+		if(tank1active){
+			// If tank1's turn is done
+			if(tank1.getState() == Tank.RECEIVING){
+				angle.setValue(tank2.getAngle());
+				power.setValue(tank2.getPower());
+				moves.setValue(tank2.getMoves());
+				weaponSelector.setActiveWeapon(tank2.getActiveWeapon());
+				tank1active = false;
+			}
+		}
+		else{
+			// If tank2's turn is done
+			if(tank2.getState() == Tank.RECEIVING){
+				angle.setValue(tank1.getAngle());
+				power.setValue(tank1.getPower());
+				moves.setValue(tank1.getMoves());
+				weaponSelector.setActiveWeapon(tank1.getActiveWeapon());
+				tank1active = true;
+			}
+		}
 		// TODO: If we're changing from player 1 to player 2, update the UI
 		angle.update(delta);
 		power.update(delta);
 		fire.update(delta);
+		moves.update(delta);
 		weaponSelector.update(delta);
 		
 		// TODO: If the player pressed a button, we need to update that value in the tank
@@ -113,6 +135,7 @@ public class Engine {
 		// UI rendering not fully implemented yet
 		angle.render(batch);
 		power.render(batch);
+		moves.render(batch);
 		fire.render(batch);
 		weaponSelector.render(batch);
 		batch.end();

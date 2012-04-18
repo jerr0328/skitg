@@ -35,7 +35,7 @@ public class UIWeaponSelector {
 		}
 		batch.draw(arrow,x,y,4,8,8,16,1,1,180); // Draw left arrow
 		font.draw(batch, "Weapon: "+weapons.get(activeWeapon).toString(), x+16, y+14);
-		batch.draw(arrow,x+80,y-1); // Draw right arrow
+		batch.draw(arrow,x+140,y-1); // Draw right arrow
 
 		batch.setColor(Color.WHITE);
 	}
