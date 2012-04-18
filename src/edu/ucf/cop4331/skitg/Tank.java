@@ -128,6 +128,14 @@ public class Tank {
 	}
 	
 	/**
+	 * Fire the active weapon
+	 */
+	public void fire(){
+		// TODO: Fire weapon
+		state = SHOOTING;
+	}
+	
+	/**
 	 * Get the position of the tank
 	 * @return
 	 */
@@ -139,6 +147,10 @@ public class Tank {
 		return power;
 	}
 	
+	public void setPower(int power){
+		this.power = power;
+	}
+	
 	public List<Weapon> getWeapons(){
 		return weapons;
 	}
@@ -147,12 +159,20 @@ public class Tank {
 		return activeWeapon;
 	}
 	
+	public void setActiveWeapon(int activeWeapon){
+		this.activeWeapon = activeWeapon;
+	}
+	
 	public int getState(){
 		return state;
 	}
 	
 	public int getAngle(){
 		return angle;
+	}
+	
+	public void setAngle(int angle){
+		this.angle = angle;
 	}
 	
 	public int getMoves(){

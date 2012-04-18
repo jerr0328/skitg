@@ -94,6 +94,15 @@ public class Engine {
 				weaponSelector.setActiveWeapon(tank2.getActiveWeapon());
 				tank1active = false;
 			}
+			else if(tank1.getState() == Tank.WAITING){
+				tank1.setAngle(angle.getValue());
+				tank1.setPower(power.getValue());
+				// TODO: Handle move
+				tank1.setActiveWeapon(weaponSelector.getActiveWeapon());
+				if(fire.isPressed()){
+					tank1.fire();
+				}
+			}
 		}
 		else{
 			// If tank2's turn is done
@@ -104,8 +113,16 @@ public class Engine {
 				weaponSelector.setActiveWeapon(tank1.getActiveWeapon());
 				tank1active = true;
 			}
+			else if(tank2.getState() == Tank.WAITING){
+				tank2.setAngle(angle.getValue());
+				tank2.setPower(power.getValue());
+				// TODO: Handle move
+				tank2.setActiveWeapon(weaponSelector.getActiveWeapon());
+				if(fire.isPressed()){
+					tank2.fire();
+				}
+			}
 		}
-		// TODO: If we're changing from player 1 to player 2, update the UI
 		angle.update(delta);
 		power.update(delta);
 		fire.update(delta);
