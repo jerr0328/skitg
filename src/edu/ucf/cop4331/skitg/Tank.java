@@ -77,6 +77,9 @@ public class Tank {
 		weapons = new ArrayList<Weapon>(5);
 		weapons.add(new BigShot(this, weaponsTex[0]));
 		weapons.add(new SingleShot(this, weaponsTex[1]));
+		weapons.add(new Sniper(this, weaponsTex[2]));
+		weapons.add(new HeatSeeker(this, weaponsTex[3]));
+		weapons.add(new Laser(this, weaponsTex[4]));
 	}
 	
 	/**
