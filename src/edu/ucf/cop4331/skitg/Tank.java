@@ -145,5 +145,17 @@ public class Tank {
 	public int getActiveWeapon(){
 		return activeWeapon;
 	}
+	
+	public int getState(){
+		return state;
+	}
+	
+	public int getAngle(){
+		return angle;
+	}
+	
+	public int getMoves(){
+		return moves;
+	}
 
 }

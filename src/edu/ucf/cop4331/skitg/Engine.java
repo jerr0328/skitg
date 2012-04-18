@@ -85,6 +85,26 @@ public class Engine {
 	 * @param delta Time elapsed
 	 */
 	public void update(float delta){
+		if(tank1active){
+			// If tank1's turn is done
+			if(tank1.getState() == Tank.RECEIVING){
+				angle.setValue(tank2.getAngle());
+				power.setValue(tank2.getPower());
+				moves.setValue(tank2.getMoves());
+				weaponSelector.setActiveWeapon(tank2.getActiveWeapon());
+				tank1active = false;
+			}
+		}
+		else{
+			// If tank2's turn is done
+			if(tank2.getState() == Tank.RECEIVING){
+				angle.setValue(tank1.getAngle());
+				power.setValue(tank1.getPower());
+				moves.setValue(tank1.getMoves());
+				weaponSelector.setActiveWeapon(tank1.getActiveWeapon());
+				tank1active = true;
+			}
+		}
 		// TODO: If we're changing from player 1 to player 2, update the UI
 		angle.update(delta);
 		power.update(delta);
