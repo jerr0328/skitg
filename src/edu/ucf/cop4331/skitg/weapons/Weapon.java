@@ -10,7 +10,7 @@ public abstract class Weapon {
 	
 	protected Vector2 position = new Vector2();
 	protected float velocity;
-	protected boolean shot = false;
+	protected boolean shot = true;
 	protected Tank shooter;
 	protected float Gravity = -20.0f;
 	

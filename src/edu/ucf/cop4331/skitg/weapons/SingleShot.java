@@ -34,16 +34,23 @@ public class SingleShot extends Weapon
 	@Override
 	public void update(float delta) 
 	{
-		// if statement that looks to see that either tank fires a shot 
-		//if(Tank.  )
+		// if statement to make sure that the shot is on the screen width wise 
+		if(shot == true  )
 		{
-			
 			position.add(velocity * delta, velocity * delta * Gravity);
+			if(shot == true)
+			{
+				if(position.x > 800 || position.x < 800 )
+				{
+					shot = false;
+				}
+				
+				
+			}
+				
 		
 		}
-		
-		
-		
+
 		
 	}
 
@@ -57,10 +64,14 @@ public class SingleShot extends Weapon
 
 	@Override
 	public void shoot() {
+		// converts the power in to a velocity
+		velocity = shooter.getPower() * .6f;
 		
-		velocity = shooter.getPower() * .2f;
 		
+		// sets the initioal position for the shot
 		position = shooter.getPosition().add(velocity * shooter.getAngle(), velocity * shooter.getAngle());
+		
+		
 		
 	}
 

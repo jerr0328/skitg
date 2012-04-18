@@ -1,7 +1,6 @@
 package edu.ucf.cop4331.skitg;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -23,7 +22,6 @@ public class Map {
 	Pixmap pixmap;
 	Texture texture;
 	TextureRegion region;
-	float A, B, C, D;
 	/**
 	 * Create the map
 	 */
@@ -56,7 +54,7 @@ public class Map {
 	 * @return the y coordinate at given x
 	 */
 	public int getHeight(int x){
-		return (int)(A*MathUtils.sinDeg(B*x + C) + D);
+		return peaks[x];
 	}
 	
 	/**
@@ -65,21 +63,9 @@ public class Map {
 	 * @return - The angle
 	 */
 	public float getAngle(int x){
-		float angle = MathUtils.atan2(A*B*MathUtils.cosDeg(B*x + C), 1)*MathUtils.radiansToDegrees;
-		
-		System.out.println(angle);
-
-		//All angles are 0 <= angle <= 360
-		while(angle > 360)
-			;//angle -= 360;
-		
-		if(angle == 0) //If slope is ---
-			return (90+angle);
-		else if(angle > 0) //If slope is negative \
-			return (angle);
-		else //If slope is positive /
-			return(angle); 
-		
+		float angle = MathUtils.atan2(peaks[x-1] - peaks[x+1], 2);
+		System.out.println(angle*MathUtils.radiansToDegrees);
+		return angle*MathUtils.radiansToDegrees;
 	}
 	
 	/**
@@ -90,26 +76,24 @@ public class Map {
 	 */	
 	private void generateTerrain(){
 		
-		//The total terrain will occupy 50% of the screen (vertically and after applying D)
-		A = (float).25*Skitg.HEIGHT;
-		
 		//Generates a random float between .5 and .9 which I found to be good ranges
-		//B = MathUtils.random((float)0.5, (float)0.9);
-		B=1;
+		float randomB = MathUtils.random((float)0.5, (float)0.9);
 		
 		//Generates a random float between 0 and the width of the screen to shift terrain horizontally (if it's > width, it is redundant) 
-		//C = MathUtils.random((float)Skitg.WIDTH);
-		C=0;
+		float randomC = MathUtils.random((float)Skitg.WIDTH);
 		
-		//Generates a vertical shift of the graph of the terrain
-		D = (float).4*Skitg.HEIGHT;
 		
 		//Loops through the peaks array, populating it with the values from the following equation:
+		//Asin(Bx + C) + D
+		//A is a quarter of the screen's height to make sure it isn't too big
+		//B is the random number which changes the horizontal dilation
+		//C is a random number which shifts the graph over horizontally
+		//D shifts the graph vertically so that it doesn't touch the floor
 		for(int i = 0; i < peaks.length; i++){
-			peaks[i] = getHeight(i);
+			peaks[i] = (int)(MathUtils.sinDeg((float) ((randomB * i ) + randomC*Skitg.WIDTH))*.25*Skitg.HEIGHT + .4*Skitg.HEIGHT);
 		}
 		
-		//New Pixmap with the width and height of the screen.
+		//New Pixmap with the width and height of the screen. No idea what RGB8888 means lol
 		pixmap = new Pixmap(Skitg.WIDTH, Skitg.HEIGHT, Pixmap.Format.RGB888);
 		
 		//New Texture must be > Pixmap dimensions, and in powers of 2
@@ -128,7 +112,7 @@ public class Map {
 		//Loops through the array, drawing line by line 
 		for(int i=0; i<peaks.length; i++)
 			pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
-
+		
 		//Draws the pixmap to the texture
 		texture.draw(pixmap, 0, 0);
 		region = new TextureRegion(texture, 0, 0, 800, 480);

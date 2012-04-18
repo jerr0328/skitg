@@ -25,6 +25,10 @@ public class BigShot extends Weapon
 
 	@Override
 	public void render(SpriteBatch batch) {
+		// Draw
+		batch.begin();
+		batch.draw(tex, position.x, position.y);
+		batch.end();
 	
 		
 	}

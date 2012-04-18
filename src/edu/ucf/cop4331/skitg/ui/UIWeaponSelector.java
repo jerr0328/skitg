@@ -57,7 +57,7 @@ public class UIWeaponSelector {
 				
 				if(x0 > x && x0 < x+8 && y0 > y && y0 < y + 16 && activeWeapon > 0)
 					activeWeapon = activeWeapon - 1;
-				else if(x0 > x + 140 && x0 < x + 148  && y0 > y && y0 < y + 16 && activeWeapon < weapons.size() - 1)
+				else if(x0 > x+80 && x0 < x+88  && y0 > y && y0 < y + 16 && activeWeapon < weapons.size() - 1)
 					activeWeapon = activeWeapon + 1;
 			}
 			
