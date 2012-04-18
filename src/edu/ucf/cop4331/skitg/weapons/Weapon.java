@@ -8,10 +8,13 @@ import edu.ucf.cop4331.skitg.Tank;
 
 public abstract class Weapon {
 	
-	protected Vector2 position;
+	protected Vector2 position = new Vector2();
 	protected float velocity;
 	protected boolean shot = false;
 	protected Tank shooter;
+	protected float Gravity = -20.0f;
+	
+	
 	
 	public Weapon(Tank shooter){
 		this.shooter = shooter;
@@ -45,7 +48,6 @@ public abstract class Weapon {
 	 * Get the icon of the weapon for the menu
 	 * @return Icon texture
 	 */
-	public abstract TextureRegion getIcon();
 
 	
 

@@ -19,13 +19,13 @@ public class BigShot extends Weapon
 
 	@Override
 	public void update(float delta) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
@@ -41,10 +41,6 @@ public class BigShot extends Weapon
 		return "Big Shot";
 	}
 
-	@Override
-	public TextureRegion getIcon() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }
