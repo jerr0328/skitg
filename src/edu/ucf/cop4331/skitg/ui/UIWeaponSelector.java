@@ -2,11 +2,13 @@ package edu.ucf.cop4331.skitg.ui;
 
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import edu.ucf.cop4331.skitg.Skitg;
 import edu.ucf.cop4331.skitg.weapons.Weapon;
 
 public class UIWeaponSelector {
@@ -16,6 +18,7 @@ public class UIWeaponSelector {
 	private List<Weapon> weapons;
 	private int activeWeapon = 0;
 	private TextureRegion arrow;
+	private float stateTime = 0;
 	
 	public UIWeaponSelector(TextureRegion arrow, BitmapFont font, int x, int y, List<Weapon> weapons){
 		this.arrow = arrow;
@@ -35,13 +38,31 @@ public class UIWeaponSelector {
 		}
 		batch.draw(arrow,x,y,4,8,8,16,1,1,180); // Draw left arrow
 		font.draw(batch, "Weapon: "+weapons.get(activeWeapon).toString(), x+16, y+14);
-		batch.draw(arrow,x+80,y-1); // Draw right arrow
+		batch.draw(arrow,x+140,y-1); // Draw right arrow
 
 		batch.setColor(Color.WHITE);
 	}
 	
 	public void update(float delta){
 		
+		if(Gdx.input.isTouched())
+		{						
+			float x0 = Gdx.input.getX(0); // (float)Gdx.graphics.getWidth()) * Skitg.HEIGHT;
+			float y0 = Skitg.HEIGHT - Gdx.input.getY(0); // (float)Gdx.graphics.getHeight()) * Skitg.WIDTH;
+					
+			if(stateTime > 0.1f)
+			{
+			
+				stateTime = 0;
+				
+				if(x0 > x && x0 < x+8 && y0 > y && y0 < y + 16 && activeWeapon > 0)
+					activeWeapon = activeWeapon - 1;
+				else if(x0 > x + 140 && x0 < x + 148  && y0 > y && y0 < y + 16 && activeWeapon < weapons.size() - 1)
+					activeWeapon = activeWeapon + 1;
+			}
+			
+			stateTime += delta;
+		}
 	}
 
 	public int getActiveWeapon() {
@@ -54,6 +75,10 @@ public class UIWeaponSelector {
 
 	public void setWeapons(List<Weapon> weapons) {
 		this.weapons = weapons;
+	}
+	
+	public void setEnabled(boolean flag){
+		this.enabled = flag;
 	}
 	
 	

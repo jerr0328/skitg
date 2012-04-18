@@ -36,10 +36,4 @@ public class MultiShot extends Weapon{
 		return "MultiShot";
 	}
 
-	@Override
-	public TextureRegion getIcon() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

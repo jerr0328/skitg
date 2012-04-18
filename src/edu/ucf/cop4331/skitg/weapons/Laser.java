@@ -36,10 +36,4 @@ public class Laser extends Weapon {
 		return "Laser";
 	}
 
-	@Override
-	public TextureRegion getIcon() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
