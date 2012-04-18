@@ -43,12 +43,5 @@ public abstract class Weapon {
 	 */
 	@Override
 	public abstract String toString();
-	
-	/**
-	 * Get the icon of the weapon for the menu
-	 * @return Icon texture
-	 */
-
-	
 
 }

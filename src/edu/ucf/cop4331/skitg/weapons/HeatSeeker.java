@@ -36,10 +36,4 @@ public class HeatSeeker extends Weapon {
 		return "Heat Seeker";
 	}
 
-	@Override
-	public TextureRegion getIcon() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

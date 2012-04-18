@@ -36,10 +36,4 @@ public class Sniper extends Weapon{
 		return "Sniper";
 	}
 
-	@Override
-	public TextureRegion getIcon() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
