@@ -102,10 +102,10 @@ public class Tank {
 	public void render(SpriteBatch batch){
 		batch.setColor(color);
 		//batch.draw(tex, position.x, position.y);
-		//System.out.println("Slope: " + slope*MathUtils.radiansToDegrees);
+		//System.out.println("Slope: " + slope);
 		//0 degrees - Vertical
 		//90 degrees- Horizontal
-		batch.draw(tex, position.x, position.y, 0, 0, 16, 32, 1, 1, slope, false); //To rotate tank depending on its position on the map
+		batch.draw(tex, position.x, position.y, 8, 8, 16, 32, 1, 1, slope, true); //To rotate tank depending on its position on the map
 		batch.setColor(Color.WHITE);
 	}
 	

@@ -23,6 +23,8 @@ public class Engine {
 	private Tank tank1;
 	// Player 2
 	private Tank tank2;
+	// Player 3 - Testing
+	//private Tank tank3;
 	// Game map
 	private Map map;
 	// Handles rendering textures
@@ -67,9 +69,17 @@ public class Engine {
 		loadTextures();
 		
 		map = new Map();
+		int tank1x = 400;
+		int tank2x = 450;
 		
-		tank1 = new Tank(texTank, texWeapons, true, 100, map.getHeight(100-16), map.getAngle(100));
-		tank2 = new Tank(texTank, texWeapons, false, 700, map.getHeight(700+32), map.getAngle(700));
+		
+		tank1 = new Tank(texTank, texWeapons, true, tank1x, map.getHeight(tank1x), map.getAngle(tank1x));
+		tank2 = new Tank(texTank, texWeapons, false, tank2x, map.getHeight(tank2x), map.getAngle(tank2x));
+		
+		/*Third Tank for Testing Purposes
+		int tank3x = 500;
+		tank3 = new Tank(texTank, texWeapons, false, tank3x, map.getHeight(tank3x), map.getAngle(tank3x));
+		*/
 		
 		angle = new UISpinner(texArrow,font,"Angle",60,360,25,0);
 		power = new UISpinner(texArrow,font,"Power",50,100,150,0);
@@ -116,6 +126,8 @@ public class Engine {
 		tank1.update(delta);
 		tank2.update(delta);
 		
+		//tank3.update(delta);
+		
 		map.update(delta);
 	}
 	
@@ -132,6 +144,7 @@ public class Engine {
 		// Tank rendering not fully implemented yet
 		tank1.render(batch);
 		tank2.render(batch);
+		//tank3.render(batch);
 		// UI rendering not fully implemented yet
 		angle.render(batch);
 		power.render(batch);
