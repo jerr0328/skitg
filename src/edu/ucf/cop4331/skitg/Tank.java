@@ -37,7 +37,7 @@ public class Tank {
 	// Angle in degrees from origin (0 degrees faces right side of screen, 90 degrees is straight up)
 	private int angle = 60;
 	// Power of shot from 0-100
-	private int power;
+	private int power = 90;
 	// Number of moves tank can make
 	private int moves = MAX_MOVES;
 	// Current score
