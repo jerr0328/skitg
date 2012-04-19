@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
-import edu.ucf.cop4331.skitg.Map;
 import edu.ucf.cop4331.skitg.Skitg;
 import edu.ucf.cop4331.skitg.Tank;
 
@@ -13,11 +12,9 @@ public class BigShot extends Weapon
 {
 	
 	private TextureRegion tex;
-	private Map map;
 	public BigShot(Tank shooter, TextureRegion tex) {
 		super(shooter);
 		
-		this.map = map;
 		this.tex = tex;
 		// TODO Auto-generated constructor stub
 	}

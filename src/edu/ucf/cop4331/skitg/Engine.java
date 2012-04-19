@@ -67,9 +67,6 @@ public class Engine {
 	// Font
 	private BitmapFont font;
 	
-	// Temporary variables to prevent too much garbage
-	private int tempAngle, tempPower;
-	
 	public static Engine getInstance(){
 		if(instance == null){
 			instance = new Engine();
@@ -95,9 +92,9 @@ public class Engine {
 		tank1 = new Tank(texTank, texCannon, texWeapons, true, tank1x, map.getHeight(tank1x), map.getAngle(tank1x));
 		tank2 = new Tank(texTank, texCannon, texWeapons, false, tank2x, map.getHeight(tank2x), map.getAngle(tank2x));
 		
-		angle = new UISpinner(texArrow,font,"Angle",90,360,25,0);
-		power = new UISpinner(texArrow,font,"Power",50,100,150,0);
-		moves = new UIMove(texArrow,font,4,275,0);
+		angle = new UISpinner(texArrow,font,"Angle",tank1.getAngle(),360,25,0);
+		power = new UISpinner(texArrow,font,"Power",tank1.getPower(),100,150,0);
+		moves = new UIMove(texArrow,font,tank1.getMoves(),275,0);
 		fire = new UIFireButton(texFireButton,400,0);
 		weaponSelector = new UIWeaponSelector(texArrow,font,500,0,tank1.getWeapons());
 		playerIndicator = new UIText(font,"Player  1",Color.BLACK,380,Skitg.HEIGHT);

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import edu.ucf.cop4331.skitg.Skitg;
-import edu.ucf.cop4331.skitg.Tank;
 
 public class UIFireButton {
 	private TextureRegion texture;
