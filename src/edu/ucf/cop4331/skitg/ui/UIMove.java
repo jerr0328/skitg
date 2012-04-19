@@ -1,9 +1,12 @@
 package edu.ucf.cop4331.skitg.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import edu.ucf.cop4331.skitg.Skitg;
 
 /**
  * Similar to the UISpinner, but handles moves
@@ -22,6 +25,10 @@ public class UIMove {
 	private boolean enabled = true;
 	// Font
 	private BitmapFont font;
+	
+	private boolean pressedLeft = false;
+	private boolean pressedRight = false;
+	private float stateTime;
 
 	public UIMove(TextureRegion arrow, BitmapFont font, int value, int x, int y){
 		this.arrow = arrow;
@@ -49,6 +56,25 @@ public class UIMove {
 		// TODO: Handle the input, update values (do bounds checking), and set/reset timer
 		// Timer is set to like 0.3s, without timer it a single press by the user may increase/decrease value
 		// by many points.
+		
+		if(Gdx.input.isTouched())
+		{						
+			float x0 = Gdx.input.getX(0); // (float)Gdx.graphics.getWidth()) * Skitg.HEIGHT;
+			float y0 = Skitg.HEIGHT - Gdx.input.getY(0); // (float)Gdx.graphics.getHeight()) * Skitg.WIDTH;
+					
+			if(stateTime > 0.2f)
+			{
+			
+				stateTime = 0;
+				
+				if(x0 > x && x0 < x+8 && y0 > y && y0 < y + 16 )
+					pressedLeft = true;
+				else if(x0 > x + 80 && x0 < x+88 && y0 > y && y0 < y + 16)
+					pressedRight = true;
+			}
+			
+			stateTime += delta;
+		}
 	}
 	
 	public int getValue() {
@@ -61,6 +87,20 @@ public class UIMove {
 	
 	public void setEnabled(boolean flag){
 		this.enabled = flag;
+	}
+	
+	public int isPressed(){
+		if(pressedLeft)
+			return 1;
+		if(pressedRight)
+			return 2;
+		else
+			return 0;
+	}
+	
+	public void unPress(boolean pressed){
+		this.pressedLeft = pressed;
+		this.pressedRight = pressed;
 	}
 
 }

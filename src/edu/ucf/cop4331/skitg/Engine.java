@@ -213,6 +213,22 @@ public class Engine {
 			tank.fire();
 			fire.setPressed(false);
 		}
+		
+		if(moves.isPressed() > 0){
+			//setUIEnabled(false);
+			if(tank.getMoves() > 0)
+			{
+				if(moves.isPressed() == 1)
+					tank.move(true);
+				else if(moves.isPressed() == 2)
+					tank.move(false);
+				
+				tank.decMoves();
+			}
+			
+			moves.unPress(false);
+			setUIValues(tank);
+		}
 	}
 	
 }

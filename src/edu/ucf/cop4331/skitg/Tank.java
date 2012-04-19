@@ -206,5 +206,9 @@ public class Tank {
 	public void setState(int state){
 		this.state = state;
 	}
+	
+	public void decMoves(){
+		moves -= 1;
+	}
 
 }
