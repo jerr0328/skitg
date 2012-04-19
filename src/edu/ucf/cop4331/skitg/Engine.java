@@ -77,10 +77,14 @@ public class Engine {
 		return instance;
 	}
 	
+	
+	protected Engine(){
+	}
+	
 	/**
 	 * Initialize engine
 	 */
-	protected Engine(){
+	public void initialize(){
 		loadTextures();
 		
 		map = new Map();

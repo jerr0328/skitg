@@ -1,6 +1,7 @@
 package edu.ucf.cop4331.skitg.weapons;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import edu.ucf.cop4331.skitg.Engine;
@@ -67,7 +68,12 @@ public abstract class Weapon {
 		return false;
 	}
 	
-	protected boolean detectTankCollision(){
+	/**
+	 * Detects collision with the tank, given rectangular bounds
+	 * @return True if hit tank
+	 */
+	protected boolean detectTankCollision(Rectangle bounds){
+		
 		return false;
 	}
 	
