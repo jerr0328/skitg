@@ -62,24 +62,35 @@ public class Map {
 	/**
 	 * 
 	 * @param x - the x position that we are looking for an angle for
-	 * @return - The angle
+	 * @return - The angle 
 	 */
 	public float getAngle(int x){
-		float angle = MathUtils.atan2(A*B*MathUtils.cosDeg(B*x + C), 1)*MathUtils.radiansToDegrees;
 		
+		
+		float angle = MathUtils.atan2(1, (peaks[x-1] - peaks[x+1]))*MathUtils.radiansToDegrees;
+		//float angle = MathUtils.atan2(A*B*MathUtils.cosDeg(B*x + C), 1)*MathUtils.radiansToDegrees;
+
 		System.out.println(angle);
 
 		//All angles are 0 <= angle <= 360
 		while(angle > 360)
-			;//angle -= 360;
+			angle -= 360;
+		while(angle < 0)
+			angle += 180;
 		
-		if(angle == 0) //If slope is ---
-			return (90+angle);
-		else if(angle > 0) //If slope is negative \
-			return (angle);
-		else //If slope is positive /
-			return(angle); 
-		
+		System.out.println(angle);
+		/*
+		if(angle == 90) { //If slope is ---
+			System.out.println("----");
+			return (angle); }
+		else if(angle > 90){ //If slope is negative
+			System.out.println("'-.");
+			return (angle+45); }
+		else {//If slope is positive /
+			System.out.println("///////");
+			return(angle+135); }
+		*/
+		return angle;
 	}
 	
 	/**
@@ -94,12 +105,12 @@ public class Map {
 		A = (float).25*Skitg.HEIGHT;
 		
 		//Generates a random float between .5 and .9 which I found to be good ranges
-		//B = MathUtils.random((float)0.5, (float)0.9);
-		B=1;
+		B = MathUtils.random((float)0.5, (float)0.9);
+		//B=1;
 		
 		//Generates a random float between 0 and the width of the screen to shift terrain horizontally (if it's > width, it is redundant) 
-		//C = MathUtils.random((float)Skitg.WIDTH);
-		C=0;
+		C = MathUtils.random((float)Skitg.WIDTH);
+		//C=0;
 		
 		//Generates a vertical shift of the graph of the terrain
 		D = (float).4*Skitg.HEIGHT;
@@ -126,8 +137,18 @@ public class Map {
 		//Green
 		pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
 		//Loops through the array, drawing line by line 
-		for(int i=0; i<peaks.length; i++)
-			pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
+		for(int i=0; i<peaks.length; i++) {
+			if(i == 200 || i == 700) {
+				pixmap.setColor(Color.BLACK);
+				pixmap.drawLine(i, Skitg.HEIGHT, i, 0);
+				pixmap.drawLine(0, Skitg.HEIGHT-peaks[i], Skitg.WIDTH, Skitg.HEIGHT-peaks[i]);
+			}
+			else
+			{
+				pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
+				pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
+			}
+		}
 
 		//Draws the pixmap to the texture
 		texture.draw(pixmap, 0, 0);

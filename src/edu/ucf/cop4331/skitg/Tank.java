@@ -101,11 +101,7 @@ public class Tank {
 	 */
 	public void render(SpriteBatch batch){
 		batch.setColor(color);
-		//batch.draw(tex, position.x, position.y);
-		//System.out.println("Slope: " + slope);
-		//0 degrees - Vertical
-		//90 degrees- Horizontal
-		batch.draw(tex, position.x, position.y, 8, 8, 16, 32, 1, 1, slope, true); //To rotate tank depending on its position on the map
+		batch.draw(tex, position.x, position.y-16, 0, 16, 16, 32, 1, 1, slope, true); //To rotate tank depending on its position on the map
 		batch.setColor(Color.WHITE);
 	}
 	
@@ -115,6 +111,19 @@ public class Tank {
 	 * @return True if move was successful.
 	 */
 	public boolean move(boolean left){
+		/* Note from Morcous
+		 * 
+		 * while(tank's position.x != desired position) {
+		 * 	position.x += 10;
+		 * 	tank.update()
+		 * }
+		 * 
+		 * Inside tank.update(), draw the same exact thing drawn in the render function, 
+		 * but the position will be updating. And instead of position.y, map.getHeight(position.x) or something. 
+		 * Can wait till tanks position right.
+		 * 
+		*/
+		
 		if(moves > 0){
 			if(left){
 				// TODO: Move left
