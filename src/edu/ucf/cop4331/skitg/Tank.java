@@ -133,7 +133,7 @@ public class Tank {
 	 */
 	public void render(SpriteBatch batch){
 		batch.setColor(color);
-		batch.draw(cannon, position.x + 7, position.y + 4, 0, 0, 14, 14, 1, 1, MathUtils.sinDeg(angle), true);
+		batch.draw(cannon, position.x + 16, position.y + 16, 0, 0, 14, 14, 1, 1, MathUtils.sinDeg(angle), true);
 		batch.draw(tex, position.x, position.y-16, 0, 16, 16, 32, 1, 1, slope, true); //To rotate tank depending on its position on the map
 		batch.setColor(Color.WHITE);
 		if(state == SHOOTING){

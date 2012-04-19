@@ -28,10 +28,12 @@ public class Laser extends Weapon {
 					
 					//velocity.y += GRAVITY * delta;
 					
+
+					position.add(velocity.x *delta * POWER_FACTOR * 2.5f, velocity.y *delta * POWER_FACTOR);
 					position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
 					bounds.setX(position.x);
 					bounds.setY(position.y);
-					
+
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
 					
