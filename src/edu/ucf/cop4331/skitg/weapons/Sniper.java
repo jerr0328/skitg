@@ -33,7 +33,15 @@ public class Sniper extends Weapon{
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
 					
-					done = detectGroundCollision();
+					if(detectTankCollision()){
+						System.out.println("Direct hit!");
+						// TODO: Explosions!
+						shooter.score(100);
+						done = true;
+					}
+					else{
+						done = detectGroundCollision();
+					}
 					
 					if(done == false)
 					{

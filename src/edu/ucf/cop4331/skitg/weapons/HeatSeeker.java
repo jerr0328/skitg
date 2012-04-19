@@ -32,7 +32,32 @@ public class HeatSeeker extends Weapon {
 					
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
-					done = detectGroundCollision();
+					
+					// TODO: Actually heatseak
+					
+					if(detectTankCollision()){
+						System.out.println("Direct hit!");
+						// TODO: Explosions!
+						shooter.score(30);
+						done = true;
+					}
+					else if(detectGroundCollision()){
+						System.out.println("Hit ground!");
+						if(detectExplosionRadius(20)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(10);
+						}
+						else if(detectExplosionRadius(40)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(5);
+						}
+						else if(detectExplosionRadius(60)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(1);
+						}
+						done = true;
+						// TODO: Draw explosion
+					}
 					if(done == false)
 					{
 						if(position.x > Skitg.WIDTH || position.x < 0 || position.y < 0 || position.y > 1000)

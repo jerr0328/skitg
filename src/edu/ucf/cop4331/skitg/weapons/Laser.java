@@ -25,14 +25,19 @@ public class Laser extends Weapon {
 				if(done == false  )
 				{
 					
-					velocity.y += GRAVITY * delta;
+					//velocity.y += GRAVITY * delta;
 					
 					position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
 					
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
 					
-					done = detectGroundCollision();
+					if(detectTankCollision()){
+						System.out.println("Direct hit!");
+						// TODO: Explosions!
+						shooter.score(20);
+						done = true;
+					}
 					
 					if(done == false)
 					{

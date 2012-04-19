@@ -1,7 +1,8 @@
 package edu.ucf.cop4331.skitg.weapons;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,8 +21,7 @@ public abstract class Weapon {
 	protected Map map;
 	protected final float GRAVITY = -9.8f;
 	protected final float POWER_FACTOR = 1.1f;
-	protected Rectangle bounds;
-	
+	protected Rectangle bounds;	
 
 	
 	public Weapon(Tank shooter){
@@ -74,11 +74,12 @@ public abstract class Weapon {
 	 * Detects collision with the tank, given rectangular bounds
 	 * @return True if hit tank
 	 */
-	protected boolean detectTankCollision(Rectangle bounds){
-		Polygon otherTankBounds = Engine.getInstance().getOtherTank(shooter).getBounds();
-		if(!bounds.contains(otherTankBounds.getBoundingRectangle())){
-			return false;
+	protected boolean detectTankCollision(){
+		Rectangle otherTankBounds = Engine.getInstance().getOtherTank(shooter).getBounds();
+		if(bounds.overlaps(otherTankBounds)){
+			return true;
 		}
+		/*
 		System.out.println("Pixel collision detection");
 		for(int i = (int)bounds.getX(); i < bounds.width; i++){
 			for(int j = (int)bounds.getY(); j < bounds.height; j++){
@@ -86,6 +87,15 @@ public abstract class Weapon {
 					return true;
 				}
 			}
+		}*/
+		return false;
+	}
+	
+	protected boolean detectExplosionRadius(float radius){
+		Circle temp = new Circle(position.x, position.y, radius);
+		Rectangle otherTankBounds = Engine.getInstance().getOtherTank(shooter).getBounds();
+		if(Intersector.overlapCircleRectangle(temp, otherTankBounds)){
+			return true;
 		}
 		return false;
 	}

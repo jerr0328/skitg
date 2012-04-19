@@ -39,15 +39,28 @@ public class BigShot extends Weapon
 					//System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
 					
 					
-					if(detectTankCollision(bounds)){
+					if(detectTankCollision()){
 						System.out.println("Direct hit!");
 						// TODO: Explosions!
-						shooter.score(10);
+						shooter.score(30);
 						done = true;
 					}
-					hitGround = detectGroundCollision();
-					if(hitGround){
-						// TODO: Detect with a radius
+					else if(detectGroundCollision()){
+						System.out.println("Hit ground!");
+						if(detectExplosionRadius(20)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(10);
+						}
+						else if(detectExplosionRadius(40)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(5);
+						}
+						else if(detectExplosionRadius(60)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(1);
+						}
+						done = true;
+						// TODO: Draw explosion
 					}
 					
 					if(done == false)

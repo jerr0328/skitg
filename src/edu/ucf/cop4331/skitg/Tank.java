@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import edu.ucf.cop4331.skitg.weapons.BigShot;
@@ -50,7 +51,7 @@ public class Tank {
 	// Available weapons
 	private List<Weapon> weapons;
 	// Tank hitbox
-	private Polygon bounds;
+	private Rectangle bounds;
 	// Texture of tank
 	private TextureRegion tex;
 	// Texture of cannon
@@ -74,6 +75,7 @@ public class Tank {
 		this.tex = tex;
 		this.cannon = cannon;
 		this.position = new Vector2(x,y);
+		/*
 		float[] verticies = new float[8];
 		verticies[0] = x;
 		verticies[1] = y;
@@ -82,9 +84,9 @@ public class Tank {
 		verticies[4] = x+32;
 		verticies[5] = y+16;
 		verticies[6] = x;
-		verticies[7] = y+16;
-		this.bounds = new Polygon(verticies);
-		bounds.rotate(MathUtils.sinDeg(slope));
+		verticies[7] = y+16;*/
+		this.bounds = new Rectangle(x,y,32,16);
+		//bounds.rotate(MathUtils.sinDeg(slope));
 		this.slope = slope;
 		if(!first){
 			state = RECEIVING;
@@ -235,7 +237,7 @@ public class Tank {
 		moves -= 1;
 	}
 	
-	public Polygon getBounds(){
+	public Rectangle getBounds(){
 		return bounds;
 	}
 
