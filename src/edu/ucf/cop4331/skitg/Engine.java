@@ -21,6 +21,8 @@ import edu.ucf.cop4331.skitg.ui.UIWeaponSelector;
  */
 public class Engine {
 	
+	private static Engine instance = null;
+	
 	// Player 1
 	private Tank tank1;
 	// Player 2
@@ -65,13 +67,21 @@ public class Engine {
 	// Font
 	private BitmapFont font;
 	
-	// Temporary variables to prevent too much garbage
-	private int tempAngle, tempPower;
+	public static Engine getInstance(){
+		if(instance == null){
+			instance = new Engine();
+		}
+		return instance;
+	}
+	
+	
+	protected Engine(){
+	}
 	
 	/**
 	 * Initialize engine
 	 */
-	public Engine(){
+	public void initialize(){
 		loadTextures();
 		
 		map = new Map();
@@ -79,12 +89,12 @@ public class Engine {
 		int tank2x = map.getMinimum(2);
 		
 		
-		tank1 = new Tank(texTank, texCannon, texWeapons, true, tank1x, map.getHeight(tank1x), map.getAngle(tank1x), map);
-		tank2 = new Tank(texTank, texCannon, texWeapons, false, tank2x, map.getHeight(tank2x), map.getAngle(tank2x), map);
+		tank1 = new Tank(texTank, texCannon, texWeapons, true, tank1x, map.getHeight(tank1x), map.getAngle(tank1x));
+		tank2 = new Tank(texTank, texCannon, texWeapons, false, tank2x, map.getHeight(tank2x), map.getAngle(tank2x));
 		
-		angle = new UISpinner(texArrow,font,"Angle",90,360,25,0);
-		power = new UISpinner(texArrow,font,"Power",50,100,150,0);
-		moves = new UIMove(texArrow,font,4,275,0);
+		angle = new UISpinner(texArrow,font,"Angle",tank1.getAngle(),360,25,0);
+		power = new UISpinner(texArrow,font,"Power",tank1.getPower(),100,150,0);
+		moves = new UIMove(texArrow,font,tank1.getMoves(),275,0);
 		fire = new UIFireButton(texFireButton,400,0);
 		weaponSelector = new UIWeaponSelector(texArrow,font,500,0,tank1.getWeapons());
 		playerIndicator = new UIText(font,"Player  1",Color.BLACK,380,Skitg.HEIGHT);
@@ -248,6 +258,26 @@ public class Engine {
 			setUIValues(tank);
 			setUIEnabled(true);
 		}
+	}
+	
+	/**
+	 * Return a reference to the map
+	 * @return The map
+	 */
+	public Map getMap(){
+		return map;
+	}
+	
+	/**
+	 * Get the reference of the other tank
+	 * @param t Tank we don't want
+	 * @return Tank that isn't t
+	 */
+	public Tank getOtherTank(Tank t){
+		if(t != tank1){
+			return tank1;
+		}
+		return tank2;
 	}
 	
 }

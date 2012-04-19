@@ -3,9 +3,9 @@ package edu.ucf.cop4331.skitg.weapons;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import edu.ucf.cop4331.skitg.Map;
 import edu.ucf.cop4331.skitg.Skitg;
 import edu.ucf.cop4331.skitg.Tank;
 
@@ -13,11 +13,9 @@ public class BigShot extends Weapon
 {
 	
 	private TextureRegion tex;
-	private Map map;
-	public BigShot(Tank shooter, TextureRegion tex, Map map) {
-		super(shooter, map);
+	public BigShot(Tank shooter, TextureRegion tex) {
+		super(shooter);
 		
-		this.map = map;
 		this.tex = tex;
 		// TODO Auto-generated constructor stub
 	}
@@ -32,13 +30,38 @@ public class BigShot extends Weapon
 					velocity.y += GRAVITY * delta;
 					
 					position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
+					bounds.setX(position.x);
+					bounds.setY(position.y);
 					
 					System.out.println("This: " + map.getHeight((int)position.x));
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xs: " + shooter.getPosition().x + " Ys: "+shooter.getPosition().y);
 					//System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
 					
-					done = detectGroundCollision();
+					
+					if(detectTankCollision()){
+						System.out.println("Direct hit!");
+						// TODO: Explosions!
+						shooter.score(30);
+						done = true;
+					}
+					else if(detectGroundCollision()){
+						System.out.println("Hit ground!");
+						if(detectExplosionRadius(20)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(10);
+						}
+						else if(detectExplosionRadius(40)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(5);
+						}
+						else if(detectExplosionRadius(60)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(1);
+						}
+						done = true;
+						// TODO: Draw explosion
+					}
 					
 					if(done == false)
 					{
@@ -69,6 +92,8 @@ public class BigShot extends Weapon
 		velocity = new Vector2(shooter.getPower()* MathUtils.cosDeg(shooter.getAngle()) * POWER_FACTOR , shooter.getPower() * MathUtils.sinDeg(shooter.getAngle()) * POWER_FACTOR);
 		
 		position = new Vector2(shooter.getPosition());
+		bounds = new Rectangle(position.x, position.y, 16,16);
+
 				
 		System.out.println("big shot fired");
 		

@@ -2,7 +2,6 @@ package edu.ucf.cop4331.skitg.ui;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
 
 import edu.ucf.cop4331.skitg.Engine;
 
@@ -16,7 +15,8 @@ public class GameScreen extends SkitgScreen {
 	}
 	
 	public void show(){
-		engine = new Engine();
+		engine = Engine.getInstance();
+		engine.initialize();
 	}
 	
 	public void render(float delta){

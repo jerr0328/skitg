@@ -26,6 +26,7 @@ public class UIMove {
 	// Font
 	private BitmapFont font;
 	
+	// Used for pressed  button
 	private boolean pressedLeft = false;
 	private boolean pressedRight = false;
 	private float stateTime;

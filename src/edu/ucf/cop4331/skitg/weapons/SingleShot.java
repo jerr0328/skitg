@@ -4,9 +4,9 @@ package edu.ucf.cop4331.skitg.weapons;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import edu.ucf.cop4331.skitg.Map;
 import edu.ucf.cop4331.skitg.Skitg;
 import edu.ucf.cop4331.skitg.Tank;
 
@@ -19,9 +19,8 @@ public class SingleShot extends Weapon
 	
 
 	
-	public SingleShot(Tank shooter, TextureRegion tex, Map map) {
-		super(shooter, map);
-		
+	public SingleShot(Tank shooter, TextureRegion tex) {
+		super(shooter);
 		this.tex = tex;
 		
 	}
@@ -40,10 +39,34 @@ public class SingleShot extends Weapon
 					velocity.y += GRAVITY * delta;
 					
 					position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
+					bounds.setX(position.x);
+					bounds.setY(position.y);
 					
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
-					done = detectGroundCollision();
+					if(detectTankCollision()){
+						System.out.println("Direct hit!");
+						// TODO: Explosions!
+						shooter.score(20);
+						done = true;
+					}
+					else if(detectGroundCollision()){
+						System.out.println("Hit ground!");
+						if(detectExplosionRadius(10)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(10);
+						}
+						else if(detectExplosionRadius(20)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(5);
+						}
+						else if(detectExplosionRadius(30)){
+							System.out.println("Explosion hit tank!");
+							shooter.score(1);
+						}
+						done = true;
+						// TODO: Draw explosion
+					}
 					if(done == false)
 					{
 						if(position.x > Skitg.WIDTH || position.x < 0 || position.y < 0 || position.y > 1000)
@@ -75,7 +98,8 @@ public class SingleShot extends Weapon
 		velocity = new Vector2(shooter.getPower()* MathUtils.cosDeg(shooter.getAngle()) * POWER_FACTOR , shooter.getPower() * MathUtils.sinDeg(shooter.getAngle()) *POWER_FACTOR);
 		
 		position = new Vector2(shooter.getPosition());
-				
+		bounds = new Rectangle(position.x, position.y, 8,8);
+		
 		System.out.println("big shot fired");
 		
 		
