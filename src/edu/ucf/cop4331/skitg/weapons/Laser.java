@@ -33,7 +33,7 @@ public class Laser extends Weapon {
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
 					
-					done = detectCollision();
+					done = detectGroundCollision();
 					
 					if(done == false)
 					{

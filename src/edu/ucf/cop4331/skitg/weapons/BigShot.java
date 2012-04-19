@@ -38,7 +38,7 @@ public class BigShot extends Weapon
 					System.out.println("Xs: " + shooter.getPosition().x + " Ys: "+shooter.getPosition().y);
 					//System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
 					
-					done = detectCollision();
+					done = detectGroundCollision();
 					
 					if(done == false)
 					{

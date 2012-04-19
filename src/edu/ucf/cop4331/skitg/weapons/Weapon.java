@@ -11,6 +11,7 @@ public abstract class Weapon {
 	protected Vector2 position = new Vector2();
 	protected Vector2 velocity = new Vector2();
 	protected boolean done = false;
+	protected boolean hitGround = false;
 	protected Tank shooter;
 	protected Map map;
 	protected final float GRAVITY = -9.8f;
@@ -54,29 +55,15 @@ public abstract class Weapon {
 	
 	/**
 	 * Detects collisions with the ground and tank
-	 * Changes the value of done to true if a collision occurs
+	 * @return True if weapon collided with ground
 	 */
 	
-	public boolean detectCollision(){
-		//If it collides, then done=true;
-		//If not, done = false;
-		
-		//Detect Collision with Ground
+	public boolean detectGroundCollision(){
 		if((position.y < shooter.getPosition().y - 1 || position.y > shooter.getPosition().y + 1) && (int)position.y == map.getHeight((int)position.x)){
 			return true;
-			//Alter map to accommodate
+			// TODO: Alter map to accommodate
 		}
-		else {
-			//Detect Collision with Tank
-			if(false){
-				return true;
-				//Change the score, etc.
-			}
-			else {
-				//No collisions have occurred
-				return false;
-			}
-		}
+		return false;
 	}
 	
 }
