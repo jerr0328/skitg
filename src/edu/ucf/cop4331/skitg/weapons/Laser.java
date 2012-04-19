@@ -25,9 +25,9 @@ public class Laser extends Weapon {
 				if(done == false  )
 				{
 					
-					velocity.y += Gravity * delta;
+					velocity.y += GRAVITY * delta;
 					
-					position.add(velocity.x *delta, velocity.y *delta);
+					position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
 					
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
@@ -60,7 +60,7 @@ public class Laser extends Weapon {
 	public void shoot() {
 		
 		
-		velocity = new Vector2(shooter.getPower()* MathUtils.cosDeg(shooter.getAngle()) * 2, shooter.getPower() * MathUtils.sinDeg(shooter.getAngle()) *2 );
+		velocity = new Vector2(shooter.getPower()* MathUtils.cosDeg(shooter.getAngle()) * POWER_FACTOR, shooter.getPower() * MathUtils.sinDeg(shooter.getAngle()) * POWER_FACTOR);
 		
 		position = new Vector2(shooter.getPosition());
 				
