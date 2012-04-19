@@ -48,6 +48,8 @@ public class Tank {
 	private Rectangle bounds;
 	// Texture of tank
 	private TextureRegion tex;
+	// Texture of cannon
+	private TextureRegion cannon;
 	// Tank state
 	private int state = WAITING;
 	// Tank color
@@ -63,8 +65,9 @@ public class Tank {
 	 * If this is the second tank, the tank is in the receiving state, angle is 120, color is red.
 	 * @param first True if this the first tank. False if this the second tank.
 	 */
-	public Tank(TextureRegion tex, TextureRegion[] weaponsTex, boolean first, int x, int y, float slope){
+	public Tank(TextureRegion tex, TextureRegion cannon, TextureRegion[] weaponsTex, boolean first, int x, int y, float slope){
 		this.tex = tex;
+		this.cannon = cannon;
 		this.position = new Vector2(x,y);
 		this.slope = slope;
 		if(!first){
