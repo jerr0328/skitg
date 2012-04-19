@@ -7,14 +7,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-<<<<<<< HEAD
-=======
 import com.badlogic.gdx.math.Polygon;
->>>>>>> refs/remotes/origin/master
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import edu.ucf.cop4331.skitg.weapons.*;
+import edu.ucf.cop4331.skitg.weapons.BigShot;
+import edu.ucf.cop4331.skitg.weapons.HeatSeeker;
+import edu.ucf.cop4331.skitg.weapons.Laser;
+import edu.ucf.cop4331.skitg.weapons.SingleShot;
+import edu.ucf.cop4331.skitg.weapons.Sniper;
+import edu.ucf.cop4331.skitg.weapons.Weapon;
 
 public class Tank {
 	
@@ -39,7 +41,7 @@ public class Tank {
 	// X,Y position
 	private Vector2 position;
 	// Angle in degrees from origin (0 degrees faces right side of screen, 90 degrees is straight up)
-	private int angle = 90;
+	private int angle = 60;
 	// Power of shot from 0-100
 	private int power = 50;
 	// Number of moves tank can make
@@ -48,11 +50,7 @@ public class Tank {
 	private int score;
 	// Available weapons
 	private List<Weapon> weapons;
-<<<<<<< HEAD
-	// Hit box for tank (x,y) at bottom-left corner, plus width and height (right and up, respectively)
-=======
 	// Tank hitbox
->>>>>>> refs/remotes/origin/master
 	private Rectangle bounds;
 	// Texture of tank
 	private TextureRegion tex;
@@ -77,7 +75,6 @@ public class Tank {
 		this.tex = tex;
 		this.cannon = cannon;
 		this.position = new Vector2(x,y);
-
 		/*
 		float[] verticies = new float[8];
 		verticies[0] = x;
@@ -89,7 +86,7 @@ public class Tank {
 		verticies[6] = x;
 		verticies[7] = y+16;*/
 		this.bounds = new Rectangle(x,y,32,16);
-		//bounds.rotate(MathUtils.sinDeg(slope));>>>>>>> refs/remotes/origin/master
+		//bounds.rotate(MathUtils.sinDeg(slope));
 		this.slope = slope;
 		if(!first){
 			state = RECEIVING;
@@ -107,11 +104,11 @@ public class Tank {
 	}
 	
 	/**
-	 * Register a hit by the weapon
-	 * @param weapon Weapon hitting the tank
+	 * Add to score by amount
+	 * @param points Points to add (use negative to remove)
 	 */
-	public void hit(Weapon weapon){
-		
+	public void score(int points){
+		this.score += points;
 	}
 	
 	/**
@@ -136,7 +133,7 @@ public class Tank {
 	 */
 	public void render(SpriteBatch batch){
 		batch.setColor(color);
-		batch.draw(cannon, position.x, position.y +8, 0, 0, 12, 12, 1, 1, angle, true);
+		batch.draw(cannon, position.x + 7, position.y + 4, 0, 0, 14, 14, 1, 1, MathUtils.sinDeg(angle), true);
 		batch.draw(tex, position.x, position.y-16, 0, 16, 16, 32, 1, 1, slope, true); //To rotate tank depending on its position on the map
 		batch.setColor(Color.WHITE);
 		if(state == SHOOTING){
@@ -238,13 +235,10 @@ public class Tank {
 	
 	public void decMoves(){
 		moves -= 1;
-<<<<<<< HEAD
-=======
 	}
 	
 	public Rectangle getBounds(){
 		return bounds;
->>>>>>> refs/remotes/origin/master
 	}
 
 }
