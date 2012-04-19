@@ -52,7 +52,7 @@ public class Sniper extends Weapon{
 		
 		position = shooter.getPosition().add(velocity * shooter.getAngle(), velocity * shooter.getAngle());
 		
-		System.out.println("single shot fired");
+		System.out.println("sniper fired");
 	}
 
 
