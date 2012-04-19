@@ -13,8 +13,8 @@ public class HeatSeeker extends Weapon {
 
 	private TextureRegion tex;
 	
-	public HeatSeeker(Tank shooter, TextureRegion tex, Map map) {
-		super(shooter, map);
+	public HeatSeeker(Tank shooter, TextureRegion tex) {
+		super(shooter);
 		this.tex = tex;
 		// TODO Auto-generated constructor stub
 	}

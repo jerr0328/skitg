@@ -13,8 +13,8 @@ public class Laser extends Weapon {
 
 	private TextureRegion tex;
 	
-	public Laser(Tank shooter, TextureRegion tex, Map map) {
-		super(shooter, map);
+	public Laser(Tank shooter, TextureRegion tex) {
+		super(shooter);
 		this.tex = tex;
 		// TODO Auto-generated constructor stub
 	}

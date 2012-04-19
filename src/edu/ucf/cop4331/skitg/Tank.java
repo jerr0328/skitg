@@ -65,7 +65,7 @@ public class Tank {
 	 * If this is the second tank, the tank is in the receiving state, angle is 120, color is red.
 	 * @param first True if this the first tank. False if this the second tank.
 	 */
-	public Tank(TextureRegion tex, TextureRegion cannon, TextureRegion[] weaponsTex, boolean first, int x, int y, float slope, Map map){
+	public Tank(TextureRegion tex, TextureRegion cannon, TextureRegion[] weaponsTex, boolean first, int x, int y, float slope){
 		this.tex = tex;
 		this.cannon = cannon;
 		this.position = new Vector2(x,y);
@@ -78,11 +78,11 @@ public class Tank {
 		
 		// TODO: Load ALL the weapons!
 		weapons = new ArrayList<Weapon>(5);
-		weapons.add(new BigShot(this, weaponsTex[0], map));
-		weapons.add(new SingleShot(this, weaponsTex[1], map));
-		weapons.add(new Sniper(this, weaponsTex[2], map));
-		weapons.add(new HeatSeeker(this, weaponsTex[3], map));
-		weapons.add(new Laser(this, weaponsTex[4], map));
+		weapons.add(new BigShot(this, weaponsTex[0]));
+		weapons.add(new SingleShot(this, weaponsTex[1]));
+		weapons.add(new Sniper(this, weaponsTex[2]));
+		weapons.add(new HeatSeeker(this, weaponsTex[3]));
+		weapons.add(new Laser(this, weaponsTex[4]));
 	}
 	
 	/**

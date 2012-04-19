@@ -3,6 +3,7 @@ package edu.ucf.cop4331.skitg.weapons;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+import edu.ucf.cop4331.skitg.Engine;
 import edu.ucf.cop4331.skitg.Map;
 import edu.ucf.cop4331.skitg.Tank;
 
@@ -12,6 +13,7 @@ public abstract class Weapon {
 	protected Vector2 velocity = new Vector2();
 	protected boolean done = false;
 	protected boolean hitGround = false;
+	protected boolean hitTank = false;
 	protected Tank shooter;
 	protected Map map;
 	protected final float GRAVITY = -9.8f;
@@ -19,9 +21,9 @@ public abstract class Weapon {
 	
 
 	
-	public Weapon(Tank shooter, Map map){
+	public Weapon(Tank shooter){
 		this.shooter = shooter;
-		this.map = map;
+		map = Engine.getInstance().getMap();
 	}
 	
 	
@@ -57,12 +59,15 @@ public abstract class Weapon {
 	 * Detects collisions with the ground and tank
 	 * @return True if weapon collided with ground
 	 */
-	
-	public boolean detectGroundCollision(){
+	protected boolean detectGroundCollision(){
 		if((position.y < shooter.getPosition().y - 1 || position.y > shooter.getPosition().y + 1) && (int)position.y == map.getHeight((int)position.x)){
 			return true;
 			// TODO: Alter map to accommodate
 		}
+		return false;
+	}
+	
+	protected boolean detectTankCollision(){
 		return false;
 	}
 	

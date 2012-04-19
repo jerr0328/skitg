@@ -19,8 +19,8 @@ public class SingleShot extends Weapon
 	
 
 	
-	public SingleShot(Tank shooter, TextureRegion tex, Map map) {
-		super(shooter, map);
+	public SingleShot(Tank shooter, TextureRegion tex) {
+		super(shooter);
 		
 		this.tex = tex;
 		
@@ -43,7 +43,10 @@ public class SingleShot extends Weapon
 					
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
-					done = detectGroundCollision();
+					hitGround = detectGroundCollision();
+					if(hitGround){
+						
+					}
 					if(done == false)
 					{
 						if(position.x > Skitg.WIDTH || position.x < 0 || position.y < 0 || position.y > 1000)

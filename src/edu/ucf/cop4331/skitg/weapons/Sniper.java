@@ -13,8 +13,8 @@ public class Sniper extends Weapon{
 
 	private TextureRegion tex;
 	
-	public Sniper(Tank shooter, TextureRegion tex, Map map) {
-		super(shooter, map);
+	public Sniper(Tank shooter, TextureRegion tex) {
+		super(shooter);
 		this.tex = tex;
 		
 		// TODO Auto-generated constructor stub

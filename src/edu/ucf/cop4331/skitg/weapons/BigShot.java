@@ -14,8 +14,8 @@ public class BigShot extends Weapon
 	
 	private TextureRegion tex;
 	private Map map;
-	public BigShot(Tank shooter, TextureRegion tex, Map map) {
-		super(shooter, map);
+	public BigShot(Tank shooter, TextureRegion tex) {
+		super(shooter);
 		
 		this.map = map;
 		this.tex = tex;
