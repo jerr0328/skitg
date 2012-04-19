@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+import edu.ucf.cop4331.skitg.Map;
 import edu.ucf.cop4331.skitg.Skitg;
 import edu.ucf.cop4331.skitg.Tank;
 
@@ -12,8 +13,8 @@ public class Sniper extends Weapon{
 
 	private TextureRegion tex;
 	
-	public Sniper(Tank shooter, TextureRegion tex) {
-		super(shooter);
+	public Sniper(Tank shooter, TextureRegion tex, Map map) {
+		super(shooter, map);
 		this.tex = tex;
 		
 		// TODO Auto-generated constructor stub
@@ -32,6 +33,8 @@ public class Sniper extends Weapon{
 					
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
+					
+					done = detectCollision();
 					
 					if(done == false)
 					{
