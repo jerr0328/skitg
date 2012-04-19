@@ -215,7 +215,7 @@ public class Engine {
 		}
 		
 		if(moves.isPressed() > 0){
-			//setUIEnabled(false);
+			setUIEnabled(false);
 			if(tank.getMoves() > 0)
 			{
 				if(moves.isPressed() == 1)
@@ -228,6 +228,7 @@ public class Engine {
 			
 			moves.unPress(false);
 			setUIValues(tank);
+			setUIEnabled(true);
 		}
 	}
 	
