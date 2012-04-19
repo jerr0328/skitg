@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+import edu.ucf.cop4331.skitg.Map;
 import edu.ucf.cop4331.skitg.Skitg;
 import edu.ucf.cop4331.skitg.Tank;
 
@@ -12,10 +13,11 @@ public class BigShot extends Weapon
 {
 	
 	private TextureRegion tex;
-
-	public BigShot(Tank shooter, TextureRegion tex) {
-		super(shooter);
+	private Map map;
+	public BigShot(Tank shooter, TextureRegion tex, Map map) {
+		super(shooter, map);
 		
+		this.map = map;
 		this.tex = tex;
 		// TODO Auto-generated constructor stub
 	}
@@ -24,27 +26,29 @@ public class BigShot extends Weapon
 	{
 		
 		// if statement to make sure that the shot is on the screen width wise 
-				if(done == false  )
+				if(done == false)
 				{
 					
 					velocity.y += GRAVITY * delta;
 					
 					position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
 					
+					System.out.println("This: " + map.getHeight((int)position.x));
 					System.out.println("X: "+position.x+" Y: "+position.y);
-					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
+					System.out.println("Xs: " + shooter.getPosition().x + " Ys: "+shooter.getPosition().y);
+					//System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
+					
+					done = detectGroundCollision();
 					
 					if(done == false)
 					{
+						//If it goes off the screen
 						if(position.x > Skitg.WIDTH || position.x < 0 || position.y < 0 || position.y > 1000)
 						{
 							done = true;
 						}
 						
-						
-					}
-						
-				
+					}				
 				}
 
 		
