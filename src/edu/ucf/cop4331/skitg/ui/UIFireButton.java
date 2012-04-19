@@ -27,8 +27,6 @@ public class UIFireButton {
 		if(stateTime <= delta)
 			pressed = false;
 		
-		System.out.println(pressed);
-		
 		if(Gdx.input.isTouched())
 		{						
 			float x0 = Gdx.input.getX(0); // (float)Gdx.graphics.getWidth()) * Skitg.HEIGHT;
