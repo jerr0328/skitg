@@ -3,8 +3,6 @@ package edu.ucf.cop4331.skitg.weapons;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.graphics;
-
 import edu.ucf.cop4331.skitg.Tank;
 
 public abstract class Weapon {
@@ -15,11 +13,7 @@ public abstract class Weapon {
 	protected Tank shooter;
 	protected float Gravity = -20.0f;
 	
-	public void CheckHit(){
-		if()
-		
-		
-	}
+
 	
 	public Weapon(Tank shooter){
 		this.shooter = shooter;
