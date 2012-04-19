@@ -31,6 +31,10 @@ public class Tank {
 	 * Tank state: Fired weapon
 	 */
 	static final int SHOOTING = 2;
+	/**
+	 * Tank state: Moving
+	 */
+	static final int MOVING = 3;
 	
 	// X,Y position
 	private Vector2 position;
@@ -40,6 +44,10 @@ public class Tank {
 	private int power = 50;
 	// Number of moves tank can make
 	private int moves = MAX_MOVES;
+	// Number of pixels per move
+	private int pixelsPerMove = 32;
+	// Desired Position when moving
+	private int desiredPosition = 0;
 	// Current score
 	private int score;
 	// Available weapons
@@ -107,6 +115,13 @@ public class Tank {
 				weapons.get(activeWeapon).update(delta);
 			}
 		}
+		else if(state == MOVING) {
+			if(position.x == desiredPosition){
+				position.x += 1;
+				
+			}
+			
+		}
 	}
 	
 	/**
@@ -140,14 +155,15 @@ public class Tank {
 		 * Can wait till tanks position right.
 		 * 
 		*/
-		
+		float desiredPositionX = position.x;
 		if(moves > 0){
 			if(left){
-				// TODO: Move left
+				desiredPositionX -= pixelsPerMove;
 			}
 			else {
-				// TODO: Move right
+				desiredPositionX += pixelsPerMove;
 			}
+			state = MOVING;
 			return true;
 		}
 		return false;
