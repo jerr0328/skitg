@@ -3,6 +3,7 @@ package edu.ucf.cop4331.skitg.weapons;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import edu.ucf.cop4331.skitg.Skitg;
@@ -28,6 +29,8 @@ public class Laser extends Weapon {
 					//velocity.y += GRAVITY * delta;
 					
 					position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
+					bounds.setX(position.x);
+					bounds.setY(position.y);
 					
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
@@ -70,7 +73,8 @@ public class Laser extends Weapon {
 		velocity = new Vector2(shooter.getPower()* MathUtils.cosDeg(shooter.getAngle()) * POWER_FACTOR, shooter.getPower() * MathUtils.sinDeg(shooter.getAngle()) * POWER_FACTOR);
 		
 		position = new Vector2(shooter.getPosition());
-				
+		bounds = new Rectangle(position.x, position.y, 2,8);
+		
 		System.out.println("big shot fired");
 		
 		
