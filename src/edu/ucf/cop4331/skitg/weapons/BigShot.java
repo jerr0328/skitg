@@ -23,19 +23,20 @@ public class BigShot extends Weapon
 	public void update(float delta) 
 	{
 		
-		System.out.println(position.x);
-		System.out.println(position.y);
 		// if statement to make sure that the shot is on the screen width wise 
 				if(done == false  )
 				{
-					position.add(velocity * delta * MathUtils.cosDeg(shooter.getAngle() + 180), (velocity*MathUtils.sinDeg(shooter.getAngle() + 180))- (.5f* Gravity));
 					
-					System.out.println(position.x);
-					System.out.println(position.y);
+					velocity.y += Gravity * delta;
+					
+					position.add(velocity.x *delta, velocity.y *delta);
+					
+					System.out.println("X: "+position.x+" Y: "+position.y);
+					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
 					
 					if(done == false)
 					{
-						if(position.x > Skitg.WIDTH || position.x < 0 || position.y < 0)
+						if(position.x > Skitg.WIDTH || position.x < 0 || position.y < 0 || position.y > 1000)
 						{
 							done = true;
 						}
@@ -61,12 +62,9 @@ public class BigShot extends Weapon
 	public void shoot() {
 		
 		
-		velocity = shooter.getPower();
+		velocity = new Vector2(shooter.getPower()* MathUtils.cosDeg(shooter.getAngle()) * 2, shooter.getPower() * MathUtils.sinDeg(shooter.getAngle()) *2 );
 		
 		position = new Vector2(shooter.getPosition());
-		
-		position.x = (position.x);// + velocity * MathUtils.cosDeg(shooter.getAngle());
-		position.y = (position.y); //+  velocity * 1.8f * MathUtils.sinDeg(shooter.getAngle());
 				
 		System.out.println("big shot fired");
 		
