@@ -210,5 +210,9 @@ public class Tank {
 	public int getScore(){
 		return score;
 	}
+	
+	public void decMoves(){
+		moves -= 1;
+	}
 
 }
