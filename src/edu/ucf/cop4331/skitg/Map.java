@@ -19,6 +19,8 @@ public class Map {
 	Texture texture;
 	TextureRegion region;
 	float A, B, C, D;
+	private int minA = 0;
+	private int minB = 0;
 	/**
 	 * Create the map
 	 */
@@ -72,6 +74,13 @@ public class Map {
 		return angle;
 	}
 	
+	public int getMinimum(int tank){
+		if (tank==1)
+			return minA+1;
+		else 
+			return minB-1;		
+	}
+	
 	/**
 	 * Randomly generates the terrain.
 	 * Values should not be too low (shouldn't have points on the ground)
@@ -81,11 +90,11 @@ public class Map {
 	private void generateTerrain(){
 		
 		//The total terrain will occupy 50% of the screen (vertically and after applying D)
-		A = (float).25*Skitg.HEIGHT;
+		A = MathUtils.random(50, (float).25*Skitg.HEIGHT);
 		
 		//Generates a random float between .5 and .9 which I found to be good ranges
-		B = MathUtils.random((float)0.5, (float)0.9);
-		//B=1;
+		B = MathUtils.random((float)0.9, (float)1.2);
+		//B=(float) 0.9;
 		
 		//Generates a random float between 0 and the width of the screen to shift terrain horizontally (if it's > width, it is redundant) 
 		C = MathUtils.random((float)Skitg.WIDTH);
@@ -95,9 +104,8 @@ public class Map {
 		D = (float).4*Skitg.HEIGHT;
 		
 		//Loops through the peaks array, populating it with the values from the following equation:
-		for(int i = 0; i < peaks.length; i++){
+		for(int i = 0; i < peaks.length; i++)
 			peaks[i] = getHeight(i);
-		}
 		
 		//New Pixmap with the width and height of the screen.
 		pixmap = new Pixmap(Skitg.WIDTH, Skitg.HEIGHT, Pixmap.Format.RGB888);
@@ -116,8 +124,15 @@ public class Map {
 		//Green
 		pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
 		//Loops through the array, drawing line by line 
-		for(int i=0; i<peaks.length; i++) 
-				pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
+		for(int i=0; i<peaks.length; i++){ 
+			pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
+			if(peaks[i] == (int)((-1*A) + D)){
+				if(minA == 0)
+					minA = i;
+				else
+					minB = i;
+			}
+		}
 
 		//Draws the pixmap to the texture
 		texture.draw(pixmap, 0, 0);

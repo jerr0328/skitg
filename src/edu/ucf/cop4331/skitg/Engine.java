@@ -85,8 +85,8 @@ public class Engine {
 		loadTextures();
 		
 		map = new Map();
-		int tank1x = 200;
-		int tank2x = 700;
+		int tank1x = map.getMinimum(1);
+		int tank2x = map.getMinimum(2);
 		
 		
 		tank1 = new Tank(texTank, texCannon, texWeapons, true, tank1x, map.getHeight(tank1x), map.getAngle(tank1x));
