@@ -43,7 +43,7 @@ public class SingleShot extends Weapon
 					{
 						if(position.x > Skitg.WIDTH || position.x < 0)
 						{
-						//	done = true;
+							done = true;
 						}
 						
 						
