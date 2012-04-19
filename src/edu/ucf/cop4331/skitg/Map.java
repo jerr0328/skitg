@@ -68,28 +68,12 @@ public class Map {
 		
 		
 		float angle = MathUtils.atan2(1, (peaks[x-1] - peaks[x+1]))*MathUtils.radiansToDegrees;
-		//float angle = MathUtils.atan2(A*B*MathUtils.cosDeg(B*x + C), 1)*MathUtils.radiansToDegrees;
-
-		System.out.println(angle);
-
 		//All angles are 0 <= angle <= 360
 		while(angle > 360)
 			angle -= 360;
 		while(angle < 0)
 			angle += 180;
 		
-		System.out.println(angle);
-		/*
-		if(angle == 90) { //If slope is ---
-			System.out.println("----");
-			return (angle); }
-		else if(angle > 90){ //If slope is negative
-			System.out.println("'-.");
-			return (angle+45); }
-		else {//If slope is positive /
-			System.out.println("///////");
-			return(angle+135); }
-		*/
 		return angle;
 	}
 	
@@ -137,18 +121,8 @@ public class Map {
 		//Green
 		pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
 		//Loops through the array, drawing line by line 
-		for(int i=0; i<peaks.length; i++) {
-			if(i == 200 || i == 700) {
-				pixmap.setColor(Color.BLACK);
-				pixmap.drawLine(i, Skitg.HEIGHT, i, 0);
-				pixmap.drawLine(0, Skitg.HEIGHT-peaks[i], Skitg.WIDTH, Skitg.HEIGHT-peaks[i]);
-			}
-			else
-			{
-				pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
+		for(int i=0; i<peaks.length; i++) 
 				pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
-			}
-		}
 
 		//Draws the pixmap to the texture
 		texture.draw(pixmap, 0, 0);
