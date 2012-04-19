@@ -195,6 +195,7 @@ public class Engine {
 		angle.setValue(tank.getAngle());
 		power.setValue(tank.getPower());
 		moves.setValue(tank.getMoves());
+		weaponSelector.setWeapons(tank.getWeapons());
 		weaponSelector.setActiveWeapon(tank.getActiveWeapon());
 	}
 	
