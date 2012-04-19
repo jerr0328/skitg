@@ -16,7 +16,7 @@ public class GameScreen extends SkitgScreen {
 	}
 	
 	public void show(){
-		engine = new Engine();
+		engine = Engine.getInstance();
 	}
 	
 	public void render(float delta){
