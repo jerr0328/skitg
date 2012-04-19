@@ -3,21 +3,25 @@ package edu.ucf.cop4331.skitg.weapons;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-
 import edu.ucf.cop4331.skitg.Tank;
 
 public abstract class Weapon {
 	
 	protected Vector2 position = new Vector2();
 	protected float velocity;
-	protected boolean shot = false;
+	protected boolean done = false;
 	protected Tank shooter;
 	protected float Gravity = -20.0f;
 	
-	
+
 	
 	public Weapon(Tank shooter){
 		this.shooter = shooter;
+	}
+	
+	
+	public boolean isDone(){
+		return done;
 	}
 	
 	/**

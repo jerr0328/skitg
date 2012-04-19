@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import edu.ucf.cop4331.skitg.Map;
+import edu.ucf.cop4331.skitg.Skitg;
 import edu.ucf.cop4331.skitg.Tank;
 
 
@@ -34,15 +35,23 @@ public class SingleShot extends Weapon
 	@Override
 	public void update(float delta) 
 	{
-		// if statement that looks to see that either tank fires a shot 
-		//if(Tank.  )
-		{
-			
-			position.add(velocity * delta, velocity * delta * Gravity);
-		
-		}
-		
-		
+		// if statement to make sure that the shot is on the screen width wise 
+				if(done == false  )
+				{
+					position.add(velocity * delta, velocity * delta * Gravity);
+					if(done == false)
+					{
+						if(position.x > Skitg.WIDTH || position.x < 0)
+						{
+							done = true;
+						}
+						
+						
+					}
+						
+				
+				}
+
 		
 		
 	}
@@ -50,9 +59,8 @@ public class SingleShot extends Weapon
 
 	public void render(SpriteBatch batch) {
 		// Draw
-		batch.begin();
 		batch.draw(tex, position.x, position.y);
-		batch.end();
+		
 	}
 
 	@Override
@@ -60,8 +68,10 @@ public class SingleShot extends Weapon
 		
 		velocity = shooter.getPower() * .2f;
 		
-		position = shooter.getPosition().add(velocity * shooter.getAngle(), velocity * shooter.getAngle());
+		position = new Vector2(shooter.getPosition());
+		position = position.add(velocity * shooter.getAngle(), velocity * shooter.getAngle());
 		
+		System.out.println("single shot fired");
 	}
 
 	@Override

@@ -77,6 +77,9 @@ public class Tank {
 		weapons = new ArrayList<Weapon>(5);
 		weapons.add(new BigShot(this, weaponsTex[0]));
 		weapons.add(new SingleShot(this, weaponsTex[1]));
+		weapons.add(new Sniper(this, weaponsTex[2]));
+		weapons.add(new HeatSeeker(this, weaponsTex[3]));
+		weapons.add(new Laser(this, weaponsTex[4]));
 	}
 	
 	/**
@@ -92,7 +95,15 @@ public class Tank {
 	 * @param delta Time elapsed
 	 */
 	public void update(float delta){
-		
+		if(state == SHOOTING){
+			if(weapons.get(activeWeapon).isDone()){
+				weapons.remove(activeWeapon);
+				activeWeapon = 0;
+				state = RECEIVING;
+			} else{
+				weapons.get(activeWeapon).update(delta);
+			}
+		}
 	}
 	
 	/**
@@ -103,6 +114,9 @@ public class Tank {
 		batch.setColor(color);
 		batch.draw(tex, position.x, position.y-16, 0, 16, 16, 32, 1, 1, slope, true); //To rotate tank depending on its position on the map
 		batch.setColor(Color.WHITE);
+		if(state == SHOOTING){
+			weapons.get(activeWeapon).render(batch);
+		}
 	}
 	
 	/**
@@ -141,6 +155,7 @@ public class Tank {
 	 */
 	public void fire(){
 		// TODO: Fire weapon
+		weapons.get(activeWeapon).shoot();
 		state = SHOOTING;
 	}
 	
@@ -186,6 +201,10 @@ public class Tank {
 	
 	public int getMoves(){
 		return moves;
+	}
+	
+	public void setState(int state){
+		this.state = state;
 	}
 
 }
