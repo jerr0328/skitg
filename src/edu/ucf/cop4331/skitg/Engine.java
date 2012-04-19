@@ -1,6 +1,7 @@
 package edu.ucf.cop4331.skitg;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import edu.ucf.cop4331.skitg.ui.UIFireButton;
 import edu.ucf.cop4331.skitg.ui.UIMove;
 import edu.ucf.cop4331.skitg.ui.UISpinner;
+import edu.ucf.cop4331.skitg.ui.UIText;
 import edu.ucf.cop4331.skitg.ui.UIWeaponSelector;
 
 /**
@@ -39,6 +41,12 @@ public class Engine {
 	private UIFireButton fire;
 	// Weapon selector
 	private UIWeaponSelector weaponSelector;
+	// Active player indicator
+	private UIText playerIndicator;
+	// Player 1 score
+	private UIText player1score;
+	// Player 2 score
+	private UIText player2score;
 	
 	// Texture stuff
 	
@@ -79,6 +87,9 @@ public class Engine {
 		moves = new UIMove(texArrow,font,4,275,0);
 		fire = new UIFireButton(texFireButton,400,0);
 		weaponSelector = new UIWeaponSelector(texArrow,font,500,0,tank1.getWeapons());
+		playerIndicator = new UIText(font,"Player  1",Color.BLACK,380,Skitg.HEIGHT);
+		player1score = new UIText(font,"0",Color.BLUE,100,Skitg.HEIGHT);
+		player2score = new UIText(font,"0",Color.RED,700,Skitg.HEIGHT);
 		
 		batch = new SpriteBatch();
 	}
@@ -95,6 +106,7 @@ public class Engine {
 				setUIEnabled(true);
 				tank1active = false;
 				tank2.setState(Tank.WAITING);
+				playerIndicator.setText("Player  2");
 			}
 			else if(tank1.getState() == Tank.WAITING){
 				updateTankValues(tank1);
@@ -107,11 +119,14 @@ public class Engine {
 				setUIEnabled(true);
 				tank1active = true;
 				tank1.setState(Tank.WAITING);
+				playerIndicator.setText("Player  1");
 			}
 			else if(tank2.getState() == Tank.WAITING){
 				updateTankValues(tank2);
 			}
 		}
+		player1score.setText(""+tank1.getScore());
+		player2score.setText(""+tank2.getScore());
 		angle.update(delta);
 		power.update(delta);
 		fire.update(delta);
@@ -145,6 +160,9 @@ public class Engine {
 		moves.render(batch);
 		fire.render(batch);
 		weaponSelector.render(batch);
+		playerIndicator.render(batch);
+		player1score.render(batch);
+		player2score.render(batch);
 		batch.end();
 	}
 	
