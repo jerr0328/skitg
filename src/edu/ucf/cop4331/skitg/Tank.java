@@ -95,7 +95,15 @@ public class Tank {
 	 * @param delta Time elapsed
 	 */
 	public void update(float delta){
-		
+		if(state == SHOOTING){
+			if(weapons.get(activeWeapon).isDone()){
+				weapons.remove(activeWeapon);
+				activeWeapon = 0;
+				state = RECEIVING;
+			} else{
+				weapons.get(activeWeapon).update(delta);
+			}
+		}
 	}
 	
 	/**
@@ -110,6 +118,9 @@ public class Tank {
 		//90 degrees- Horizontal
 		batch.draw(tex, position.x, position.y, 8, 8, 16, 32, 1, 1, slope, true); //To rotate tank depending on its position on the map
 		batch.setColor(Color.WHITE);
+		if(state == SHOOTING){
+			weapons.get(activeWeapon).render(batch);
+		}
 	}
 	
 	/**
