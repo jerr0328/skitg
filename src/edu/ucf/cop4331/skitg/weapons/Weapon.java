@@ -11,7 +11,7 @@ public abstract class Weapon {
 	protected float velocity;
 	protected boolean done = false;
 	protected Tank shooter;
-	protected float Gravity = -2.8f;
+	protected float Gravity = -.8f;
 	
 
 	

@@ -28,7 +28,7 @@ public class BigShot extends Weapon
 		// if statement to make sure that the shot is on the screen width wise 
 				if(done == false  )
 				{
-					position.add(velocity * delta * MathUtils.cosDeg(shooter.getAngle()), (velocity) + Gravity * (velocity * delta *(-MathUtils.sinDeg(shooter.getAngle()))));
+					position.add(velocity * delta * MathUtils.cosDeg(shooter.getAngle() + 180), (velocity*MathUtils.sinDeg(shooter.getAngle() + 180))- (.5f* Gravity));
 					
 					System.out.println(position.x);
 					System.out.println(position.y);
@@ -61,7 +61,7 @@ public class BigShot extends Weapon
 	public void shoot() {
 		
 		
-		velocity = shooter.getPower() * 3;
+		velocity = shooter.getPower();
 		
 		position = new Vector2(shooter.getPosition());
 		
