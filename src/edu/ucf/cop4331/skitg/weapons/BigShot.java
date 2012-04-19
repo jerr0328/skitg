@@ -29,6 +29,7 @@ public class BigShot extends Weapon
 					
 					velocity.y += GRAVITY * delta;
 					
+					position.add(velocity.x *delta * POWER_FACTOR * 2.5f, velocity.y *delta * POWER_FACTOR);
 					position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
 					bounds.setX(position.x);
 					bounds.setY(position.y);
