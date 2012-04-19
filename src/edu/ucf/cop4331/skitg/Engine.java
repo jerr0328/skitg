@@ -216,6 +216,7 @@ public class Engine {
 		if(fire.isPressed()){
 			setUIEnabled(false);
 			tank.fire();
+			fire.setPressed(false);
 		}
 	}
 	

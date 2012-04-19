@@ -23,9 +23,7 @@ public class UIFireButton {
 	}
 	
 	public void update(float delta){
-		
-		if(stateTime <= delta)
-			pressed = false;
+		System.out.println(pressed);
 		
 		if(Gdx.input.isTouched())
 		{						
@@ -68,6 +66,10 @@ public class UIFireButton {
 
 	public boolean isPressed() {
 		return pressed;
+	}
+	
+	public void setPressed(boolean pressed){
+		this.pressed = pressed;
 	}
 	
 
