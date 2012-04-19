@@ -43,7 +43,7 @@ public class SingleShot extends Weapon
 					{
 						if(position.x > Skitg.WIDTH || position.x < 0)
 						{
-							done = true;
+						//	done = true;
 						}
 						
 						
@@ -68,7 +68,8 @@ public class SingleShot extends Weapon
 		
 		velocity = shooter.getPower() * .2f;
 		
-		position = shooter.getPosition().add(velocity * shooter.getAngle(), velocity * shooter.getAngle());
+		position = new Vector2(shooter.getPosition());
+		position = position.add(velocity * shooter.getAngle(), velocity * shooter.getAngle());
 		
 		System.out.println("single shot fired");
 	}
