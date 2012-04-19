@@ -101,6 +101,7 @@ public class Engine {
 				setUIValues(tank2);
 				setUIEnabled(true);
 				tank1active = false;
+				tank2.setState(Tank.WAITING);
 			}
 			else if(tank1.getState() == Tank.WAITING){
 				updateTankValues(tank1);
@@ -112,6 +113,7 @@ public class Engine {
 				setUIValues(tank1);
 				setUIEnabled(true);
 				tank1active = true;
+				tank1.setState(Tank.WAITING);
 			}
 			else if(tank2.getState() == Tank.WAITING){
 				updateTankValues(tank2);

@@ -193,5 +193,9 @@ public class Tank {
 	public int getMoves(){
 		return moves;
 	}
+	
+	public void setState(int state){
+		this.state = state;
+	}
 
 }
