@@ -23,14 +23,14 @@ public class UIFireButton {
 	}
 	
 	public void update(float delta){
-		System.out.println(pressed);
+		
 		
 		if(Gdx.input.isTouched())
 		{						
 			float x0 = Gdx.input.getX(0); // (float)Gdx.graphics.getWidth()) * Skitg.HEIGHT;
 			float y0 = Skitg.HEIGHT - Gdx.input.getY(0); // (float)Gdx.graphics.getHeight()) * Skitg.WIDTH;
 					
-			if(stateTime > 0.1f)
+			if(stateTime > 0.2f)
 			{
 			
 				stateTime = 0;

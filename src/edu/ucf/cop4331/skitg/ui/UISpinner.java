@@ -60,6 +60,7 @@ public class UISpinner {
 		// TODO: Handle the input, update values (do bounds checking), and set/reset timer
 		// Timer is set to like 0.3s, without timer it a single press by the user may increase/decrease value
 		// by many points.
+				
 		if(Gdx.input.isTouched())
 		{						
 			float x0 = Gdx.input.getX(0); // (float)Gdx.graphics.getWidth()) * Skitg.HEIGHT;
