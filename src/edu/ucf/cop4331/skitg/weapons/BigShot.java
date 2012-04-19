@@ -22,10 +22,17 @@ public class BigShot extends Weapon
 
 	public void update(float delta) 
 	{
+		
+		System.out.println(position.x);
+		System.out.println(position.y);
 		// if statement to make sure that the shot is on the screen width wise 
 				if(done == false  )
 				{
-					position.add(velocity * delta, velocity * delta * Gravity);
+					position.add(velocity * delta * MathUtils.cosDeg(shooter.getAngle()), (velocity) + Gravity * (velocity * delta *(-MathUtils.sinDeg(shooter.getAngle()))));
+					
+					System.out.println(position.x);
+					System.out.println(position.y);
+					
 					if(done == false)
 					{
 						if(position.x > Skitg.WIDTH || position.x < 0 || position.y < 0)
@@ -53,12 +60,17 @@ public class BigShot extends Weapon
 	@Override
 	public void shoot() {
 		
-		velocity = shooter.getPower() * .08f;
+		
+		velocity = shooter.getPower() * 3;
 		
 		position = new Vector2(shooter.getPosition());
-		position = position.add(velocity * .5f * shooter.getAngle(), velocity * .5f * shooter.getAngle());
 		
+		position.x = (position.x);// + velocity * MathUtils.cosDeg(shooter.getAngle());
+		position.y = (position.y); //+  velocity * 1.8f * MathUtils.sinDeg(shooter.getAngle());
+				
 		System.out.println("big shot fired");
+		
+		
 	}
 
 

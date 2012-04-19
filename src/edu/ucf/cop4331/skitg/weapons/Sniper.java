@@ -14,6 +14,8 @@ public class Sniper extends Weapon{
 	
 	public Sniper(Tank shooter, TextureRegion tex) {
 		super(shooter);
+		this.tex = tex;
+		
 		// TODO Auto-generated constructor stub
 	}
 
@@ -50,10 +52,14 @@ public class Sniper extends Weapon{
 	@Override
 	public void shoot() {
 		
+		if (shooter.getPower() == 0){
+			velocity = 1;
+			}
+		
 		velocity = shooter.getPower() * .08f;
 		
 		position = new Vector2(shooter.getPosition());
-		position = position.add(velocity * .5f * shooter.getAngle(), velocity * .5f * shooter.getAngle());
+		position = position.add(velocity * shooter.getAngle(), velocity * .5f * shooter.getAngle());
 		
 		System.out.println("sniper fired");
 	}

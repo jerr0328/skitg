@@ -14,6 +14,7 @@ public class Laser extends Weapon {
 	
 	public Laser(Tank shooter, TextureRegion tex) {
 		super(shooter);
+		this.tex = tex;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -49,6 +50,10 @@ public class Laser extends Weapon {
 
 	@Override
 	public void shoot() {
+		
+		if (shooter.getPower() == 0){
+			velocity = 1;
+			}
 		
 		velocity = shooter.getPower() * .08f;
 		
