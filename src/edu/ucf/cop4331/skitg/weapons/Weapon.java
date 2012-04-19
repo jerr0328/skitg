@@ -1,6 +1,7 @@
 package edu.ucf.cop4331.skitg.weapons;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -19,6 +20,7 @@ public abstract class Weapon {
 	protected Map map;
 	protected final float GRAVITY = -9.8f;
 	protected final float POWER_FACTOR = 1.1f;
+	protected Rectangle bounds;
 	
 
 	
@@ -73,7 +75,18 @@ public abstract class Weapon {
 	 * @return True if hit tank
 	 */
 	protected boolean detectTankCollision(Rectangle bounds){
-		
+		Polygon otherTankBounds = Engine.getInstance().getOtherTank(shooter).getBounds();
+		if(!bounds.contains(otherTankBounds.getBoundingRectangle())){
+			return false;
+		}
+		System.out.println("Pixel collision detection");
+		for(int i = (int)bounds.getX(); i < bounds.width; i++){
+			for(int j = (int)bounds.getY(); j < bounds.height; j++){
+				if(otherTankBounds.contains(i, j)){
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 	

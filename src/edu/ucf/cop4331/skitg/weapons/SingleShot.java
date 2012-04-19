@@ -4,6 +4,7 @@ package edu.ucf.cop4331.skitg.weapons;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import edu.ucf.cop4331.skitg.Skitg;
@@ -20,7 +21,6 @@ public class SingleShot extends Weapon
 	
 	public SingleShot(Tank shooter, TextureRegion tex) {
 		super(shooter);
-		
 		this.tex = tex;
 		
 	}
@@ -39,12 +39,20 @@ public class SingleShot extends Weapon
 					velocity.y += GRAVITY * delta;
 					
 					position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
+					bounds.setX(position.x);
+					bounds.setY(position.y);
 					
 					System.out.println("X: "+position.x+" Y: "+position.y);
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
+					if(detectTankCollision(bounds)){
+						System.out.println("Direct hit!");
+						// TODO: Explosions!
+						shooter.score(10);
+						done = true;
+					}
 					hitGround = detectGroundCollision();
 					if(hitGround){
-						
+						// TODO: Detect with a radius
 					}
 					if(done == false)
 					{
@@ -77,7 +85,8 @@ public class SingleShot extends Weapon
 		velocity = new Vector2(shooter.getPower()* MathUtils.cosDeg(shooter.getAngle()) * POWER_FACTOR , shooter.getPower() * MathUtils.sinDeg(shooter.getAngle()) *POWER_FACTOR);
 		
 		position = new Vector2(shooter.getPosition());
-				
+		bounds = new Rectangle(position.x, position.y, 8,8);
+		
 		System.out.println("big shot fired");
 		
 		

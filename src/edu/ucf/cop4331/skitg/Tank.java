@@ -7,10 +7,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
-import edu.ucf.cop4331.skitg.weapons.*;
+import edu.ucf.cop4331.skitg.weapons.BigShot;
+import edu.ucf.cop4331.skitg.weapons.HeatSeeker;
+import edu.ucf.cop4331.skitg.weapons.Laser;
+import edu.ucf.cop4331.skitg.weapons.SingleShot;
+import edu.ucf.cop4331.skitg.weapons.Sniper;
+import edu.ucf.cop4331.skitg.weapons.Weapon;
 
 public class Tank {
 	
@@ -35,7 +40,7 @@ public class Tank {
 	// X,Y position
 	private Vector2 position;
 	// Angle in degrees from origin (0 degrees faces right side of screen, 90 degrees is straight up)
-	private int angle = 90;
+	private int angle = 60;
 	// Power of shot from 0-100
 	private int power = 50;
 	// Number of moves tank can make
@@ -44,8 +49,8 @@ public class Tank {
 	private int score;
 	// Available weapons
 	private List<Weapon> weapons;
-	// Hit box for tank (x,y) at bottom-left corner, plus width and height (right and up, respectively)
-	private Rectangle bounds;
+	// Tank hitbox
+	private Polygon bounds;
 	// Texture of tank
 	private TextureRegion tex;
 	// Texture of cannon
@@ -69,6 +74,17 @@ public class Tank {
 		this.tex = tex;
 		this.cannon = cannon;
 		this.position = new Vector2(x,y);
+		float[] verticies = new float[8];
+		verticies[0] = x;
+		verticies[1] = y;
+		verticies[2] = x+32;
+		verticies[3] = y;
+		verticies[4] = x+32;
+		verticies[5] = y+16;
+		verticies[6] = x;
+		verticies[7] = y+16;
+		this.bounds = new Polygon(verticies);
+		bounds.rotate(MathUtils.sinDeg(slope));
 		this.slope = slope;
 		if(!first){
 			state = RECEIVING;
@@ -86,11 +102,11 @@ public class Tank {
 	}
 	
 	/**
-	 * Register a hit by the weapon
-	 * @param weapon Weapon hitting the tank
+	 * Add to score by amount
+	 * @param points Points to add (use negative to remove)
 	 */
-	public void hit(Weapon weapon){
-		
+	public void score(int points){
+		this.score += points;
 	}
 	
 	/**
@@ -217,6 +233,10 @@ public class Tank {
 	
 	public void decMoves(){
 		moves -= 1;
+	}
+	
+	public Polygon getBounds(){
+		return bounds;
 	}
 
 }
