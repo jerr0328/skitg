@@ -1,5 +1,6 @@
 package edu.ucf.cop4331.skitg;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -32,6 +33,11 @@ public class Map {
 	private int minA = 0;
 	private int minB = 0;
 	private int state = HASNOTCHANGED;
+	
+	private boolean hasExplosion = false;
+	private int	explosionRadius = 0;
+	private int explosionPosX = 0;
+	private int explosionPosY = 0;
 	
 	/**
 	 * Create the map
@@ -66,15 +72,23 @@ public class Map {
 			//Loops through the array, drawing line by line 
 			for(int i=0; i<peaks.length; i++)
 				pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
-	
+			
+			if(hasExplosion){
+				pixmap.setColor(Color.RED);
+				pixmap.fillCircle(explosionPosX, explosionPosY, explosionRadius);
+				pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
+				hasExplosion = false;
+				state = HASCHANGED;
+			}
+			else
+				state = HASNOTCHANGED;
+			
 			//Draws the pixmap to the texture
 			texture.draw(pixmap, 0, 0);
 			region = new TextureRegion(texture, 0, 0, 800, 480);
 			
 			//Disposes of the pixmap
 		    pixmap.dispose();	
-		    
-		    state = HASNOTCHANGED;
 		}
 	}
 	
@@ -199,15 +213,18 @@ public class Map {
 	 * @param x - the x coordinate of the center of the circle of destruction
 	 * @param y - the y coordinate of the center of the circle of destruction
 	 */
-	public void destroyTerrain(int radius, int x, int y){
-		//We have a circle x^2 + y^2 = radius
-		//We need to remove all pixels from x-radius to x+radius 
-		System.out.println(radius + " " +x);
+	public void destroyTerrain(int radius, int x, int y){		
 		for(int i = x-radius; i<x+radius; i++){
 			int math = (int)(-1*Math.abs(Math.sqrt(Math.pow(radius,2)-Math.pow(i-x, 2))) + y);
 			if(peaks[i] > math)
 				peaks[i] = math;
 		}	
+		
+		hasExplosion = true;
+		explosionRadius = radius;
+		explosionPosX = x;
+		explosionPosY = Skitg.HEIGHT-y;
+		
 		state = HASCHANGED;
 	}
 }
