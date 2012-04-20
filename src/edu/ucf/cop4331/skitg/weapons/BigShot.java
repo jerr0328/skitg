@@ -60,7 +60,7 @@ public class BigShot extends Weapon
 							shooter.score(1);
 						}
 						
-						map.destroyTerrain(40, (int)position.x, (int)position.y);
+						map.destroyTerrain(50, (int)position.x, (int)position.y);
 						
 						done = true;
 						// TODO: Draw explosion

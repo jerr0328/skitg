@@ -176,7 +176,7 @@ public class Map {
 			pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
 			
 			//Finds the minimum points so the tanks can start there
-			if(i > 32 && i < Skitg.WIDTH - 32 && peaks[i] == (int)((-1*A) + D)){
+			if(i > 16 && i < Skitg.WIDTH - 16 && peaks[i] == (int)((-1*A) + D)){
 				if(minA == 0)
 					minA = i;
 				else
@@ -201,7 +201,9 @@ public class Map {
 		//We need to remove all pixels from x-radius to x+radius 
 		System.out.println(radius + " " +x);
 		for(int i = x-radius; i<x+radius; i++){
-			peaks[i] = (int)Math.abs(Math.sqrt(Math.pow(radius,2)-Math.pow(i-x, 2)) + y) + peaks[i];
+			int math = (int)(-1*Math.abs(Math.sqrt(Math.pow(radius,2)-Math.pow(i-x, 2))) + y);
+			if(peaks[i] > math)
+				peaks[i] = math;
 		}	
 		state = HASCHANGED;
 	}
