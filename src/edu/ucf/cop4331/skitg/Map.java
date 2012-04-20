@@ -12,6 +12,16 @@ import com.badlogic.gdx.math.MathUtils;
  *
  */
 public class Map {
+
+	/**
+	 * Map state: Terrain has been changed
+	 */
+	static final int HASCHANGED = 1;
+	
+	/**
+	 * Map state: Terrain has been changed
+	 */
+	static final int HASNOTCHANGED = 0;
 	
 	// Array index is the x coordinate, value is the y value of the ground level
 	private int[] peaks;
@@ -21,6 +31,8 @@ public class Map {
 	float A, B, C, D;
 	private int minA = 0;
 	private int minB = 0;
+	private int state = HASNOTCHANGED;
+	
 	/**
 	 * Create the map
 	 */
@@ -35,7 +47,35 @@ public class Map {
 	 * @param delta Time elapsed
 	 */
 	public void update(float delta){
-		
+		if(state == HASCHANGED) {
+			pixmap = new Pixmap(Skitg.WIDTH, Skitg.HEIGHT, Pixmap.Format.RGB888);
+			
+			//New Texture must be > Pixmap dimensions, and in powers of 2
+			texture = new Texture(1024, 1024, Pixmap.Format.RGB888);
+			texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+			
+			//Since it is larger than the pixmap, it needs to wrap around the edges
+			texture.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
+			
+			//Blue
+			pixmap.setColor(0.0f, 1.0f, 1.0f, 1.0f);
+			pixmap.fillRectangle(0, 0, Skitg.WIDTH, Skitg.HEIGHT);
+			
+			//Green
+			pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
+			//Loops through the array, drawing line by line 
+			for(int i=0; i<peaks.length; i++)
+				pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
+	
+			//Draws the pixmap to the texture
+			texture.draw(pixmap, 0, 0);
+			region = new TextureRegion(texture, 0, 0, 800, 480);
+			
+			//Disposes of the pixmap
+		    pixmap.dispose();	
+		    
+		    state = HASNOTCHANGED;
+		}
 	}
 	
 	/**
@@ -50,10 +90,18 @@ public class Map {
 	/**
 	 * 
 	 * @param x
-	 * @return the y coordinate at given x
+	 * @return the y coordinate for the sin function at x
 	 */
 	public int getHeight(int x){
 		return (int)(A*MathUtils.sinDeg(B*x + C) + D);
+	}
+	
+	/**
+	 * @param x
+	 * @return the y coordinate at given x
+	 */
+	public int getPeaksY(int x){
+		return peaks[x];
 	}
 	
 	/**
@@ -143,5 +191,18 @@ public class Map {
 		//Disposes of the pixmap
 	    pixmap.dispose();		
 		
+	}
+	
+	/**
+	 * When a collision with the terrain is made, it should be destroyed
+	 */
+	public void destroyTerrain(int radius, int x, int y){
+		//We have a circle x^2 + y^2 = radius
+		//We need to remove all pixels from x-radius to x+radius 
+		System.out.println(radius + " " +x);
+		for(int i = x-radius; i<x+radius; i++){
+			peaks[i] = (int)Math.abs(Math.sqrt(Math.pow(radius,2)-Math.pow(i-x, 2)) + y) + peaks[i];
+		}	
+		state = HASCHANGED;
 	}
 }

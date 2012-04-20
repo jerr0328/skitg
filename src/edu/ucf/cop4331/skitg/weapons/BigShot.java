@@ -59,6 +59,9 @@ public class BigShot extends Weapon
 							System.out.println("Explosion hit tank!");
 							shooter.score(1);
 						}
+						
+						map.destroyTerrain(40, (int)position.x, (int)position.y);
+						
 						done = true;
 						// TODO: Draw explosion
 					}

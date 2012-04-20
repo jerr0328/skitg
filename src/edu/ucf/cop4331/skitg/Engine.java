@@ -143,12 +143,11 @@ public class Engine {
 		moves.update(delta);
 		weaponSelector.update(delta);
 		
+		map.update(delta);
+		
 		tank1.update(delta);
 		tank2.update(delta);
-		
-		//tank3.update(delta);
-		
-		map.update(delta);
+
 	}
 	
 	/**

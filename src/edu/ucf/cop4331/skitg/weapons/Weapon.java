@@ -63,7 +63,7 @@ public abstract class Weapon {
 	 * @return True if weapon collided with ground
 	 */
 	protected boolean detectGroundCollision(){
-		if((position.y < shooter.getPosition().y - 1 || position.y > shooter.getPosition().y + 1) && (int)position.y == map.getHeight((int)position.x)){
+		if((position.y < shooter.getPosition().y - 1 || position.y > shooter.getPosition().y + 1) && (int)position.y <= map.getPeaksY((int)position.x)){
 			return true;
 			// TODO: Alter map to accommodate
 		}

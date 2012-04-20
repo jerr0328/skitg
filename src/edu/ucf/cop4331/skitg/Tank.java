@@ -147,7 +147,7 @@ public class Tank {
 				else
 					position.x+=.1;
 				
-				position.y = map.getHeight((int)position.x);
+				position.y = map.getPeaksY((int)position.x);
 				slope = map.getAngle((int)position.x);
 			}			
 		}
