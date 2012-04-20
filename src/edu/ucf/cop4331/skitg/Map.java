@@ -195,6 +195,9 @@ public class Map {
 	
 	/**
 	 * When a collision with the terrain is made, it should be destroyed
+	 * @param radius - the radius of the circle of destruction
+	 * @param x - the x coordinate of the center of the circle of destruction
+	 * @param y - the y coordinate of the center of the circle of destruction
 	 */
 	public void destroyTerrain(int radius, int x, int y){
 		//We have a circle x^2 + y^2 = radius
