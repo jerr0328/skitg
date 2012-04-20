@@ -51,9 +51,9 @@ public class Tank {
 	// Number of moves tank can make
 	private int moves = MAX_MOVES;
 	// Number of pixels per move
-	private int pixelsPerMove = 32;
+	private int pixelsPerMove = 400;
 	// Desired Position when moving
-	private int desiredPosition = 0;
+	private int desiredPosition = 100;
 	// Current score
 	private int score;
 	// Available weapons
@@ -70,16 +70,17 @@ public class Tank {
 	private Color color = Color.BLUE;
 	// Index of active weapon
 	private int activeWeapon;
-	//The rotation of the tank
+	// The rotation of the tank
 	private float slope;
-	
+	// The map
+	private Map map;
 	/**
 	 * Initialize a tank with a flag for if this is the first tank.
 	 * If this the first tank, the tank is in the waiting state, angle is 60, color is blue.
 	 * If this is the second tank, the tank is in the receiving state, angle is 120, color is red.
 	 * @param first True if this the first tank. False if this the second tank.
 	 */
-	public Tank(TextureRegion tex, TextureRegion cannon, TextureRegion[] weaponsTex, boolean first, int x, int y, float slope){
+	public Tank(TextureRegion tex, TextureRegion cannon, TextureRegion[] weaponsTex, boolean first, int x, int y, Map map){
 		this.tex = tex;
 		this.cannon = cannon;
 		this.position = new Vector2(x,y);
@@ -92,10 +93,12 @@ public class Tank {
 		verticies[4] = x+32;
 		verticies[5] = y+16;
 		verticies[6] = x;
-		verticies[7] = y+16;*/
+		verticies[7] = y+16;
+		*/
 		this.bounds = new Rectangle(x,y,32,16);
 		//bounds.rotate(MathUtils.sinDeg(slope));
-		this.slope = slope;
+		this.slope = map.getAngle(x);
+		this.map = map;
 		if(!first){
 			state = RECEIVING;
 			angle = 120;
@@ -134,11 +137,19 @@ public class Tank {
 			}
 		}
 		else if(state == MOVING) {
-			if(position.x == desiredPosition){
-				position.x += 1;
-				
+			if((int)position.x == desiredPosition){
+				state = RECEIVING;
 			}
-			
+			else {
+				//System.out.println("Position: "+position.x + "  Desired: " + desiredPosition);
+				if(position.x > desiredPosition)
+					position.x--;
+				else
+					position.x++;
+				
+				position.y = map.getHeight((int)position.x);
+				slope = map.getAngle((int)position.x);
+			}			
 		}
 	}
 	
@@ -149,7 +160,7 @@ public class Tank {
 	public void render(SpriteBatch batch){
 		batch.setColor(color);
 		batch.draw(cannon, position.x - 6, position.y + 14, 0, 0, 8, 8, 1, 1, angle - 90, true);
-		batch.draw(tex, position.x, position.y-16, 0, 16, 16, 32, 1, 1, 90, true); //To rotate tank depending on its position on the map
+		batch.draw(tex, position.x, position.y-16, 0, 16, 16, 32, 1, 1, slope, true); //To rotate tank depending on its position on the map
 		batch.setColor(Color.WHITE);
 		if(state == SHOOTING){
 			weapons.get(activeWeapon).render(batch);
@@ -162,26 +173,23 @@ public class Tank {
 	 * @return True if move was successful.
 	 */
 	public boolean move(boolean left){
-		/* Note from Morcous
-		 * 
-		 * while(tank's position.x != desired position) {
-		 * 	position.x += 10;
-		 * 	tank.update()
-		 * }
-		 * 
-		 * Inside tank.update(), draw the same exact thing drawn in the render function, 
-		 * but the position will be updating. And instead of position.y, map.getHeight(position.x) or something. 
-		 * Can wait till tanks position right.
-		 * 
-		*/
-		float desiredPositionX = position.x;
+		desiredPosition = (int)position.x;
 		if(moves > 0){
 			if(left){
-				desiredPositionX -= pixelsPerMove;
+				desiredPosition -= pixelsPerMove;
 			}
 			else {
-				desiredPositionX += pixelsPerMove;
+				desiredPosition += pixelsPerMove;
 			}
+			
+			if(desiredPosition < 32)
+				desiredPosition = 32;
+			if(desiredPosition > Skitg.WIDTH - 32)
+				desiredPosition = Skitg.WIDTH - 32;
+			
+			if(desiredPosition == (int)position.x)
+				return false;
+			
 			state = MOVING;
 			return true;
 		}

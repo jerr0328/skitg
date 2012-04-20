@@ -89,8 +89,8 @@ public class Engine {
 		int tank2x = map.getMinimum(2);
 		
 		
-		tank1 = new Tank(texTank, texCannon, texWeapons, true, tank1x, map.getHeight(tank1x), map.getAngle(tank1x));
-		tank2 = new Tank(texTank, texCannon, texWeapons, false, tank2x, map.getHeight(tank2x), map.getAngle(tank2x));
+		tank1 = new Tank(texTank, texCannon, texWeapons, true, tank1x, map.getHeight(tank1x), map);
+		tank2 = new Tank(texTank, texCannon, texWeapons, false, tank2x, map.getHeight(tank2x), map);
 		
 		angle = new UISpinner(texArrow,font,"Angle",tank1.getAngle(),360,25,0);
 		power = new UISpinner(texArrow,font,"Power",tank1.getPower(),100,150,0);

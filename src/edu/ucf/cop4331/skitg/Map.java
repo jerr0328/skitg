@@ -126,6 +126,8 @@ public class Map {
 		//Loops through the array, drawing line by line 
 		for(int i=0; i<peaks.length; i++){ 
 			pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
+			
+			//Finds the minimum points so the tanks can start there
 			if(i > 32 && i < Skitg.WIDTH - 32 && peaks[i] == (int)((-1*A) + D)){
 				if(minA == 0)
 					minA = i;
