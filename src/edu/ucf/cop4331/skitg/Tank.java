@@ -51,7 +51,7 @@ public class Tank {
 	// Number of moves tank can make
 	private int moves = MAX_MOVES;
 	// Number of pixels per move
-	private int pixelsPerMove = 400;
+	private int pixelsPerMove = 50;
 	// Desired Position when moving
 	private int desiredPosition = 100;
 	// Current score
@@ -143,9 +143,9 @@ public class Tank {
 			else {
 				//System.out.println("Position: "+position.x + "  Desired: " + desiredPosition);
 				if(position.x > desiredPosition)
-					position.x--;
+					position.x-=.1;
 				else
-					position.x++;
+					position.x+=.1;
 				
 				position.y = map.getHeight((int)position.x);
 				slope = map.getAngle((int)position.x);
