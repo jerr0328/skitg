@@ -138,14 +138,14 @@ public class Tank {
 		}
 		else if(state == MOVING) {
 			if((int)position.x == desiredPosition){
-				state = RECEIVING;
+				state = WAITING;
 			}
 			else {
 				//System.out.println("Position: "+position.x + "  Desired: " + desiredPosition);
 				if(position.x > desiredPosition)
-					position.x-=.1;
+					position.x-=4*delta;
 				else
-					position.x+=.1;
+					position.x+=4*delta;
 				
 				position.y = map.getPeaksY((int)position.x);
 				slope = map.getAngle((int)position.x);

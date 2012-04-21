@@ -49,6 +49,10 @@ public class Engine {
 	private UIText player1score;
 	// Player 2 score
 	private UIText player2score;
+	// Volleys remaining
+	private int volleys = 5;
+	// Game over?
+	private boolean gameOver = false;
 	
 	// Texture stuff
 	
@@ -118,18 +122,24 @@ public class Engine {
 				tank2.setState(Tank.WAITING);
 				playerIndicator.setText("Player  2");
 			}
-			else if(tank1.getState() == Tank.WAITING){
+			else if(tank1.getState() == Tank.WAITING && !gameOver){
 				updateTankValues(tank1);
 			}
 		}
 		else{
 			// If tank2's turn is done
 			if(tank2.getState() == Tank.RECEIVING){
-				setUIValues(tank1);
-				setUIEnabled(true);
-				tank1active = true;
-				tank1.setState(Tank.WAITING);
-				playerIndicator.setText("Player  1");
+				volleys--;
+				if(volleys == 0){
+					gameOver = true;
+					playerIndicator.setText("Game over!");
+				}else{
+					setUIValues(tank1);
+					setUIEnabled(true);
+					tank1active = true;
+					tank1.setState(Tank.WAITING);
+					playerIndicator.setText("Player  1");
+				}
 			}
 			else if(tank2.getState() == Tank.WAITING){
 				updateTankValues(tank2);
@@ -137,12 +147,13 @@ public class Engine {
 		}
 		player1score.setText(""+tank1.getScore());
 		player2score.setText(""+tank2.getScore());
-		angle.update(delta);
-		power.update(delta);
-		fire.update(delta);
-		moves.update(delta);
-		weaponSelector.update(delta);
-		
+		if(!gameOver){
+			angle.update(delta);
+			power.update(delta);
+			fire.update(delta);
+			moves.update(delta);
+			weaponSelector.update(delta);
+		}
 		map.update(delta);
 		
 		tank1.update(delta);
@@ -160,15 +171,17 @@ public class Engine {
 		// Begin rendering sprites in order from back to front
 		batch.begin();
 		map.render(batch);
-		// Tank rendering not fully implemented yet
+
 		tank1.render(batch);
 		tank2.render(batch);
-		// UI rendering not fully implemented yet
-		angle.render(batch);
-		power.render(batch);
-		moves.render(batch);
-		fire.render(batch);
-		weaponSelector.render(batch);
+		
+		if(!gameOver){
+			angle.render(batch);
+			power.render(batch);
+			moves.render(batch);
+			fire.render(batch);
+			weaponSelector.render(batch);
+		}
 		playerIndicator.render(batch);
 		player1score.render(batch);
 		player2score.render(batch);

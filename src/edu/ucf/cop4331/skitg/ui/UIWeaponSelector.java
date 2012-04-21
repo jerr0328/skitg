@@ -17,6 +17,7 @@ public class UIWeaponSelector {
 	private BitmapFont font;
 	private List<Weapon> weapons;
 	private int activeWeapon = 0;
+	private String activeWeaponName;
 	private TextureRegion arrow;
 	private float stateTime = 0;
 	
@@ -26,6 +27,7 @@ public class UIWeaponSelector {
 		this.x = x;
 		this.y = y;
 		this.weapons = weapons;
+		this.activeWeaponName = weapons.get(activeWeapon).toString();
 	}
 	
 	public void render(SpriteBatch batch){
@@ -37,7 +39,7 @@ public class UIWeaponSelector {
 			font.setColor(1, 1, 1, 0.5f);
 		}
 		batch.draw(arrow,x,y,4,8,8,16,1,1,180); // Draw left arrow
-		font.draw(batch, "Weapon: "+weapons.get(activeWeapon).toString(), x+16, y+14);
+		font.draw(batch, "Weapon: "+activeWeaponName, x+16, y+14);
 		batch.draw(arrow,x+140,y-1); // Draw right arrow
 
 		batch.setColor(Color.WHITE);
@@ -56,9 +58,9 @@ public class UIWeaponSelector {
 				stateTime = 0;
 				
 				if(x0 > x && x0 < x+8 && y0 > y && y0 < y + 16 && activeWeapon > 0)
-					activeWeapon = activeWeapon - 1;
+					setActiveWeapon(activeWeapon - 1);
 				else if(x0 > x + 140 && x0 < x + 148  && y0 > y && y0 < y + 16 && activeWeapon < weapons.size() - 1)
-					activeWeapon = activeWeapon + 1;
+					setActiveWeapon(activeWeapon + 1);
 			}
 			
 			stateTime += delta;
@@ -71,6 +73,7 @@ public class UIWeaponSelector {
 
 	public void setActiveWeapon(int activeWeapon) {
 		this.activeWeapon = activeWeapon;
+		this.activeWeaponName = weapons.get(activeWeapon).toString();
 	}
 
 	public void setWeapons(List<Weapon> weapons) {
