@@ -52,15 +52,8 @@ public class Sniper extends Weapon{
 						{
 							done = true;
 						}
-						
-						
-					}
-						
-				
+					}		
 				}
-
-		
-		
 	}
 
 

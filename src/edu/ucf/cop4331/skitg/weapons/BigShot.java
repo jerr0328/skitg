@@ -24,61 +24,57 @@ public class BigShot extends Weapon
 	{
 		
 		// if statement to make sure that the shot is on the screen width wise 
-				if(done == false)
-				{
-					
-					velocity.y += GRAVITY * delta;
-					
-					position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
-					bounds.setX(position.x);
-					bounds.setY(position.y);
-					
-					System.out.println("This: " + map.getHeight((int)position.x));
-					System.out.println("X: "+position.x+" Y: "+position.y);
-					System.out.println("Xs: " + shooter.getPosition().x + " Ys: "+shooter.getPosition().y);
-					//System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
-					
-					
-					if(detectTankCollision()){
-						System.out.println("Direct hit!");
-						// TODO: Explosions!
-						shooter.score(30);
-						done = true;
-					}
-					else if(detectGroundCollision()){
-						System.out.println("Hit ground!");
-						if(detectExplosionRadius(20)){
-							System.out.println("Explosion hit tank!");
-							shooter.score(10);
-						}
-						else if(detectExplosionRadius(40)){
-							System.out.println("Explosion hit tank!");
-							shooter.score(5);
-						}
-						else if(detectExplosionRadius(60)){
-							System.out.println("Explosion hit tank!");
-							shooter.score(1);
-						}
-						
-						map.destroyTerrain(50, (int)position.x, (int)position.y);
-						
-						done = true;
-						// TODO: Draw explosion
-					}
-					
-					if(done == false)
-					{
-						//If it goes off the screen
-						if(position.x > Skitg.WIDTH || position.x < 0 || position.y < 0 || position.y > 1000)
-						{
-							done = true;
-						}
-						
-					}				
+		if(done == false)
+		{
+			
+			velocity.y += GRAVITY * delta;
+			
+			position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
+			bounds.setX(position.x);
+			bounds.setY(position.y);
+			
+			System.out.println("This: " + map.getHeight((int)position.x));
+			System.out.println("X: "+position.x+" Y: "+position.y);
+			System.out.println("Xs: " + shooter.getPosition().x + " Ys: "+shooter.getPosition().y);
+			//System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
+			
+			
+			if(detectTankCollision()){
+				System.out.println("Direct hit!");
+				// TODO: Explosions!
+				shooter.score(30);
+				done = true;
+			}
+			else if(detectGroundCollision()){
+				System.out.println("Hit ground!");
+				if(detectExplosionRadius(20)){
+					System.out.println("Explosion hit tank!");
+					shooter.score(10);
 				}
-
-		
-		
+				else if(detectExplosionRadius(40)){
+					System.out.println("Explosion hit tank!");
+					shooter.score(5);
+				}
+				else if(detectExplosionRadius(60)){
+					System.out.println("Explosion hit tank!");
+					shooter.score(1);
+				}
+				
+				map.destroyTerrain(50, (int)position.x, (int)position.y);
+				
+				done = true;
+				// TODO: Draw explosion
+			}
+			
+			if(done == false)
+			{
+				//If it goes off the screen
+				if(position.x >= Skitg.WIDTH - 5 || position.x <= 0 || position.y <= 0 || position.y >= 1000)
+				{
+					done = true;
+				}
+			}				
+		}
 	}
 
 

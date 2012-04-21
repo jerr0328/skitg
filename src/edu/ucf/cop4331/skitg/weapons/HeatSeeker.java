@@ -63,7 +63,7 @@ public class HeatSeeker extends Weapon {
 					}
 					if(done == false)
 					{
-						if(position.x > Skitg.WIDTH || position.x < 0 || position.y < 0 || position.y > 1000)
+						if(position.x >= Skitg.WIDTH - 5 || position.x <= 0 || position.y <= 0 || position.y >= 1000)
 						{
 							done = true;
 						}
