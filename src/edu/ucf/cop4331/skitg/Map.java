@@ -214,7 +214,7 @@ public class Map {
 	 * @param y - the y coordinate of the center of the circle of destruction
 	 */
 	public void destroyTerrain(int radius, int x, int y){		
-		for(int i = x-radius; i<x+radius; i++){
+		for(int i = x-radius; i<x+radius && i<Skitg.WIDTH; i++){
 			int math = (int)(-1*Math.abs(Math.sqrt(Math.pow(radius,2)-Math.pow(i-x, 2))) + y);
 			if(peaks[i] > math)
 				peaks[i] = math;
