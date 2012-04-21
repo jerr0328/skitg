@@ -19,8 +19,8 @@ public abstract class Weapon {
 	protected boolean hitTank = false;
 	protected Tank shooter;
 	protected Map map;
-	protected final float GRAVITY = -9.8f;
-	protected final float POWER_FACTOR = 1.1f;
+	protected final float GRAVITY = -30f;
+	protected final float POWER_FACTOR = 2.0f;
 	protected Rectangle bounds;	
 
 	
