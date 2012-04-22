@@ -32,7 +32,7 @@ public class Map {
 	float A, B, C, D;
 	private int minA = 0;
 	private int minB = 0;
-	private int state = HASNOTCHANGED;
+	protected int state = HASNOTCHANGED;
 	
 	private boolean hasExplosion = false;
 	private int	explosionRadius = 0;
@@ -215,6 +215,8 @@ public class Map {
 	 */
 	public void destroyTerrain(int radius, int x, int y){		
 		for(int i = x-radius; i<x+radius && i<Skitg.WIDTH; i++){
+			if(i <0)
+				i = 0;
 			int math = (int)(-1*Math.abs(Math.sqrt(Math.pow(radius,2)-Math.pow(i-x, 2))) + y);
 			if(peaks[i] > math)
 				peaks[i] = math;

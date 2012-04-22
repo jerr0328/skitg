@@ -17,17 +17,11 @@ public class SingleShot extends Weapon
 	
 	private TextureRegion tex;
 	
-
-	
 	public SingleShot(Tank shooter, TextureRegion tex) {
 		super(shooter);
 		this.tex = tex;
 		
-	}
-
-	
-	
-	
+	}	
 	
 	public void update(float delta) 
 	{
@@ -46,9 +40,10 @@ public class SingleShot extends Weapon
 					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
 					if(detectTankCollision()){
 						System.out.println("Direct hit!");
-						// TODO: Explosions!
+
 						shooter.score(20);
 						done = true;
+						map.destroyTerrain(30, (int)position.x, (int)position.y);
 					}
 					else if(detectGroundCollision()){
 						System.out.println("Hit ground!");
@@ -64,8 +59,7 @@ public class SingleShot extends Weapon
 							System.out.println("Explosion hit tank!");
 							shooter.score(1);
 						}
-						
-						map.destroyTerrain(25, (int)position.x, (int)position.y);
+						map.destroyTerrain(30, (int)position.x, (int)position.y);
 						
 						done = true;
 						// TODO: Draw explosion

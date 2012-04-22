@@ -44,6 +44,7 @@ public class BigShot extends Weapon
 				// TODO: Explosions!
 				shooter.score(30);
 				done = true;
+				map.destroyTerrain(60, (int)position.x, (int)position.y);
 			}
 			else if(detectGroundCollision()){
 				System.out.println("Hit ground!");
@@ -58,13 +59,12 @@ public class BigShot extends Weapon
 				else if(detectExplosionRadius(60)){
 					System.out.println("Explosion hit tank!");
 					shooter.score(1);
-				}
-				
-				map.destroyTerrain(50, (int)position.x, (int)position.y);
-				
+				}				
 				done = true;
+				map.destroyTerrain(60, (int)position.x, (int)position.y);
 				// TODO: Draw explosion
 			}
+			
 			
 			if(done == false)
 			{
