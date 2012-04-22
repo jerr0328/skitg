@@ -127,6 +127,11 @@ public class Tank {
 	 * @param delta Time elapsed
 	 */
 	public void update(float delta){
+		if(map.state == map.HASCHANGED){
+			position.y = map.getPeaksY((int)position.x);
+			slope = map.getAngle((int)position.x);
+		}
+		
 		if(state == SHOOTING){
 			if(weapons.get(activeWeapon).isDone()){
 				weapons.remove(activeWeapon);
@@ -143,9 +148,9 @@ public class Tank {
 			else {
 				//System.out.println("Position: "+position.x + "  Desired: " + desiredPosition);
 				if(position.x > desiredPosition)
-					position.x-=4*delta;
+					position.x -= 4*delta;
 				else
-					position.x+=4*delta;
+					position.x += 4*delta;
 				
 				position.y = map.getPeaksY((int)position.x);
 				slope = map.getAngle((int)position.x);
