@@ -43,6 +43,7 @@ public class SingleShot extends Weapon
 
 						shooter.score(20);
 						done = true;
+						map.destroyTerrain(30, (int)position.x, (int)position.y);
 					}
 					else if(detectGroundCollision()){
 						System.out.println("Hit ground!");
@@ -58,7 +59,6 @@ public class SingleShot extends Weapon
 							System.out.println("Explosion hit tank!");
 							shooter.score(1);
 						}
-						
 						map.destroyTerrain(30, (int)position.x, (int)position.y);
 						
 						done = true;
