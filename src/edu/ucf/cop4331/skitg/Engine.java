@@ -128,7 +128,7 @@ public class Engine {
 		}
 		else{
 			// If tank2's turn is done
-			if(tank2.getState() == Tank.RECEIVING){
+			if(tank2.getState() == Tank.RECEIVING && !gameOver){
 				volleys--;
 				if(volleys == 0){
 					gameOver = true;
