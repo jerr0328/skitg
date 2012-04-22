@@ -192,7 +192,7 @@ public class Engine {
 	 * Load the textures, initialize the TextureRegions
 	 */
 	private void loadTextures(){
-		texture = new Texture(Gdx.files.internal("assets/png.png"));
+		texture = new Texture(Gdx.files.internal("data/png.png"));
 		texFireButton = new TextureRegion(texture, 0, 0, 64, 16);
 		texArrow = new TextureRegion(texture, 65, 0, 8, 16);
 		texTank = new TextureRegion(texture, 83, 0, 32, 16);
@@ -211,8 +211,8 @@ public class Engine {
 		// Laser
 		texWeapons[4] = new TextureRegion(texture,156,0,2,8);
 		
-		font = new BitmapFont(Gdx.files.internal("assets/arial12.fnt"),
-		         Gdx.files.internal("assets/arial12.png"), false);
+		font = new BitmapFont(Gdx.files.internal("data/arial12.fnt"),
+		         Gdx.files.internal("data/arial12.png"), false);
 	}
 	
 	/**
