@@ -15,12 +15,13 @@ import edu.ucf.cop4331.skitg.ui.UIText;
 import edu.ucf.cop4331.skitg.ui.UIWeaponSelector;
 
 /**
- * Handles game logic and physics
+ * Handles game logic and texture loading
  * @author Jeremy Mayeres
  *
  */
 public class Engine {
 	
+	// Singleton
 	private static Engine instance = null;
 	
 	// Player 1
@@ -32,7 +33,7 @@ public class Engine {
 	// Handles rendering textures
 	private SpriteBatch batch;
 	// True if Tank 1 is up, False is Tank 2 is up
-	private boolean tank1active = true;
+	private boolean tank1active;
 	// Angle UI element
 	private UISpinner angle;
 	// Power UI element
@@ -50,11 +51,11 @@ public class Engine {
 	// Player 2 score
 	private UIText player2score;
 	// Volleys remaining
-	private int volleys = 5;
+	private int volleys;
 	// Game over?
-	private boolean gameOver = false;
+	private boolean gameOver;
 	
-	// Texture stuff
+	// Textures
 	
 	// Texture file
 	private Texture texture;
@@ -71,6 +72,11 @@ public class Engine {
 	// Font
 	private BitmapFont font;
 	
+	/**
+	 * Get an instance of the engine.
+	 * Creates a new instance if one doesn't exist.
+	 * @return Singleton instance of engine
+	 */
 	public static Engine getInstance(){
 		if(instance == null){
 			instance = new Engine();
@@ -78,8 +84,10 @@ public class Engine {
 		return instance;
 	}
 	
-	
-	protected Engine(){
+	/**
+	 * Private constructor since we are using Singleton pattern
+	 */
+	private Engine(){
 	}
 	
 	/**
@@ -89,13 +97,19 @@ public class Engine {
 		loadTextures();
 		
 		map = new Map();
-		int tank1x = map.getMinimum(1);
-		int tank2x = map.getMinimum(2);
 		
+		// Place tanks at the bottom of the valley
+		int tank1x = map.getMinimum(true);
+		int tank2x = map.getMinimum(false);
 		
 		tank1 = new Tank(texTank, texCannon, texWeapons, true, tank1x, map.getHeight(tank1x), map);
 		tank2 = new Tank(texTank, texCannon, texWeapons, false, tank2x, map.getHeight(tank2x), map);
 		
+		tank1active = true;
+		volleys = 5;
+		gameOver = false;
+		
+		// Initialize UI
 		angle = new UISpinner(texArrow,font,"Angle",tank1.getAngle(),360,25,0);
 		power = new UISpinner(texArrow,font,"Power",tank1.getPower(),100,150,0);
 		moves = new UIMove(texArrow,font,tank1.getMoves(),275,0);
@@ -114,7 +128,7 @@ public class Engine {
 	 */
 	public void update(float delta){
 		if(tank1active){
-			// If tank1's turn is done
+			// If tank1's turn is done, activate tank2
 			if(tank1.getState() == Tank.RECEIVING){
 				setUIValues(tank2);
 				setUIEnabled(true);
@@ -127,10 +141,12 @@ public class Engine {
 			}
 		}
 		else{
-			// If tank2's turn is done
+			// If tank2's turn is done, activate tank1
 			if(tank2.getState() == Tank.RECEIVING && !gameOver){
+				// At the end of tank2's turn, we need to decrease the remaining volleys
 				volleys--;
 				if(volleys == 0){
+					// If the game is over, we can stop drawing the controls
 					gameOver = true;
 					playerIndicator.setText("Game over!");
 				}else{
@@ -145,8 +161,11 @@ public class Engine {
 				updateTankValues(tank2);
 			}
 		}
+		
 		player1score.setText(""+tank1.getScore());
 		player2score.setText(""+tank2.getScore());
+		
+		// Update the controls unless the game is over
 		if(!gameOver){
 			angle.update(delta);
 			power.update(delta);
@@ -154,11 +173,11 @@ public class Engine {
 			moves.update(delta);
 			weaponSelector.update(delta);
 		}
+		
 		map.update(delta);
 		
 		tank1.update(delta);
 		tank2.update(delta);
-
 	}
 	
 	/**
@@ -168,13 +187,15 @@ public class Engine {
 	public void render(float delta){
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		// Begin rendering sprites in order from back to front
+		// Begin rendering in order from back to front
 		batch.begin();
+		
 		map.render(batch);
 
 		tank1.render(batch);
 		tank2.render(batch);
 		
+		// Render the controls unless the game is over
 		if(!gameOver){
 			angle.render(batch);
 			power.render(batch);
@@ -182,9 +203,12 @@ public class Engine {
 			fire.render(batch);
 			weaponSelector.render(batch);
 		}
+		
 		playerIndicator.render(batch);
 		player1score.render(batch);
 		player2score.render(batch);
+		
+		// Send to video controller to be rendered
 		batch.end();
 	}
 	
@@ -246,14 +270,16 @@ public class Engine {
 	private void updateTankValues(Tank tank){
 		tank.setAngle(angle.getValue());
 		tank.setPower(power.getValue());
-		// TODO: Handle move
 		tank.setActiveWeapon(weaponSelector.getActiveWeapon());
+		
+		// Handle firing
 		if(fire.isPressed()){
 			setUIEnabled(false);
 			tank.fire();
 			fire.setPressed(false);
 		}
 		
+		// Handles move
 		if(moves.isPressed() > 0){
 			setUIEnabled(false);
 			if(tank.getMoves() > 0)

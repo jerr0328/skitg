@@ -6,8 +6,6 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -18,6 +16,11 @@ import edu.ucf.cop4331.skitg.weapons.SingleShot;
 import edu.ucf.cop4331.skitg.weapons.Sniper;
 import edu.ucf.cop4331.skitg.weapons.Weapon;
 
+/**
+ * Handles the tanks in game, represents a player
+ * @author Jeremy Mayeres
+ *
+ */
 public class Tank {
 	
 	/**
@@ -74,6 +77,7 @@ public class Tank {
 	private float slope;
 	// The map
 	private Map map;
+	
 	/**
 	 * Initialize a tank with a flag for if this is the first tank.
 	 * If this the first tank, the tank is in the waiting state, angle is 60, color is blue.
@@ -84,19 +88,7 @@ public class Tank {
 		this.tex = tex;
 		this.cannon = cannon;
 		this.position = new Vector2(x,y);
-		/*
-		float[] verticies = new float[8];
-		verticies[0] = x;
-		verticies[1] = y;
-		verticies[2] = x+32;
-		verticies[3] = y;
-		verticies[4] = x+32;
-		verticies[5] = y+16;
-		verticies[6] = x;
-		verticies[7] = y+16;
-		*/
 		this.bounds = new Rectangle(x,y,32,16);
-		//bounds.rotate(MathUtils.sinDeg(slope));
 		this.slope = map.getAngle(x);
 		this.map = map;
 		if(!first){
@@ -105,7 +97,7 @@ public class Tank {
 			color = Color.RED;
 		}
 		
-		// TODO: Load ALL the weapons!
+		// Load the weapons
 		weapons = new ArrayList<Weapon>(5);
 		weapons.add(new BigShot(this, weaponsTex[0]));
 		weapons.add(new SingleShot(this, weaponsTex[1]));
@@ -127,7 +119,7 @@ public class Tank {
 	 * @param delta Time elapsed
 	 */
 	public void update(float delta){
-		if(map.state == map.HASCHANGED){
+		if(map.isChanged()){
 			position.y = map.getPeaksY((int)position.x);
 			slope = map.getAngle((int)position.x);
 		}
@@ -146,7 +138,7 @@ public class Tank {
 				state = WAITING;
 			}
 			else {
-				//System.out.println("Position: "+position.x + "  Desired: " + desiredPosition);
+				// DEBUG: System.out.println("Position: "+position.x + "  Desired: " + desiredPosition);
 				if(position.x > desiredPosition)
 					position.x -= 4*delta;
 				else
@@ -205,67 +197,117 @@ public class Tank {
 	 * Fire the active weapon
 	 */
 	public void fire(){
-		// TODO: Fire weapon
 		weapons.get(activeWeapon).shoot();
 		state = SHOOTING;
 	}
 	
 	/**
 	 * Get the position of the tank
-	 * @return
+	 * @return Vector representing the position
 	 */
 	public Vector2 getPosition(){
 		return position;
 	}
 	
+	/**
+	 * Get the firing power
+	 * @return Firing power (0-100)
+	 */
 	public int getPower(){
 		return power;
 	}
 	
+	/**
+	 * Set the firing power
+	 * @param power Firing power (0-100)
+	 */
 	public void setPower(int power){
 		this.power = power;
 	}
 	
+	/**
+	 * Get the weapons list
+	 * @return List of weapons
+	 */
 	public List<Weapon> getWeapons(){
 		return weapons;
 	}
 	
+	/**
+	 * Get the index of the active weapon
+	 * @return Index of active weapon in list
+	 */
 	public int getActiveWeapon(){
 		return activeWeapon;
 	}
 	
+	/**
+	 * Set the active weapon
+	 * @param activeWeapon Index of active weapon in list
+	 */
 	public void setActiveWeapon(int activeWeapon){
 		this.activeWeapon = activeWeapon;
 	}
 	
+	/**
+	 * Get the tank's state
+	 * @return State of tank
+	 */
 	public int getState(){
 		return state;
 	}
 	
-	public int getAngle(){
-		return angle;
-	}
-	
-	public void setAngle(int angle){
-		this.angle = angle;
-	}
-	
-	public int getMoves(){
-		return moves;
-	}
-	
+	/**
+	 * Set the tank's state
+	 * @param state State of the tank
+	 */
 	public void setState(int state){
 		this.state = state;
 	}
 	
+	/**
+	 * Get the tank's firing angle
+	 * @return Firing angle (0-359)
+	 */
+	public int getAngle(){
+		return angle;
+	}
+	
+	/**
+	 * Set the tank's firing angle
+	 * @param angle Firing angle (0-359)
+	 */
+	public void setAngle(int angle){
+		this.angle = angle;
+	}
+	
+	/**
+	 * Get the remaining moves
+	 * @return Moves remaining
+	 */
+	public int getMoves(){
+		return moves;
+	}
+	
+	/**
+	 * Get the player's score
+	 * @return Score for this tank/player
+	 */
 	public int getScore(){
 		return score;
 	}
 	
+	/**
+	 * Decrease the amount of remaining moves
+	 */
 	public void decMoves(){
 		moves -= 1;
 	}
 	
+	/**
+	 * Get the tank's bounds (hitbox)
+	 * @return Rectangle representing the tank's hitbox
+	 */
 	public Rectangle getBounds(){
 		return bounds;
 	}

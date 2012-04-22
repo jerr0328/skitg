@@ -1,6 +1,3 @@
-/**
- * 
- */
 package edu.ucf.cop4331.skitg;
 
 import com.badlogic.gdx.backends.jogl.JoglApplication;
@@ -12,6 +9,7 @@ import com.badlogic.gdx.backends.jogl.JoglApplication;
 public class DesktopStarter {
 
 	/**
+	 * Main method ran on the desktop version
 	 * @param args
 	 */
 	public static void main(String[] args) {

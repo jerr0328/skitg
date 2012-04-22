@@ -14,15 +14,6 @@ import com.badlogic.gdx.math.MathUtils;
  */
 public class Map {
 
-	/**
-	 * Map state: Terrain has been changed
-	 */
-	static final int HASCHANGED = 1;
-	
-	/**
-	 * Map state: Terrain has been changed
-	 */
-	static final int HASNOTCHANGED = 0;
 	
 	// Array index is the x coordinate, value is the y value of the ground level
 	private int[] peaks;
@@ -32,8 +23,7 @@ public class Map {
 	float A, B, C, D;
 	private int minA = 0;
 	private int minB = 0;
-	protected int state = HASNOTCHANGED;
-	
+	private boolean hasChanged = false;
 	private boolean hasExplosion = false;
 	private int	explosionRadius = 0;
 	private int explosionPosX = 0;
@@ -53,7 +43,7 @@ public class Map {
 	 * @param delta Time elapsed
 	 */
 	public void update(float delta){
-		if(state == HASCHANGED) {
+		if(hasChanged == true) {
 			pixmap = new Pixmap(Skitg.WIDTH, Skitg.HEIGHT, Pixmap.Format.RGB888);
 			
 			//New Texture must be > Pixmap dimensions, and in powers of 2
@@ -78,10 +68,10 @@ public class Map {
 				pixmap.fillCircle(explosionPosX, explosionPosY, explosionRadius);
 				pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
 				hasExplosion = false;
-				state = HASCHANGED;
+				hasChanged = true;
 			}
 			else
-				state = HASNOTCHANGED;
+				hasChanged = false;
 			
 			//Draws the pixmap to the texture
 			texture.draw(pixmap, 0, 0);
@@ -136,8 +126,13 @@ public class Map {
 		return angle;
 	}
 	
-	public int getMinimum(int tank){
-		if (tank==1)
+	/**
+	 * Find the x-value of a valley
+	 * @param first True to get the first valley, False to get the second valley 
+	 * @return X coordinate of the valley
+	 */
+	public int getMinimum(boolean first){
+		if (first)
 			return minA+1;
 		else 
 			return minB-1;		
@@ -227,6 +222,14 @@ public class Map {
 		explosionPosX = x;
 		explosionPosY = Skitg.HEIGHT-y;
 		
-		state = HASCHANGED;
+		hasChanged = true;
+	}
+	
+	/**
+	 * Has the terrain been changed recently?
+	 * @return True if the terrain has been changed, otherwise false.
+	 */
+	public boolean isChanged(){
+		return hasChanged;
 	}
 }
