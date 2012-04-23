@@ -152,7 +152,7 @@ public abstract class Weapon {
 	}
 	
 	/**
-	 * Update the position of the shot and checks if shot went off the map
+	 * Update the position of the shot and checks if shot went off the map.
 	 * @param delta Time elapsed
 	 * @param useGravity True to have shot affected by gravity, false otherwise
 	 */
@@ -164,6 +164,13 @@ public abstract class Weapon {
 		bounds.setX(position.x);
 		bounds.setY(position.y);
 		
+		boundsCheck();
+	}
+	
+	/**
+	 * Checks if shot went off the map and updates done status if it did.
+	 */
+	protected void boundsCheck(){
 		if(position.x >= Skitg.WIDTH - 5 || position.x <= 0 || position.y <= 0 || position.y >= 1000)
 		{
 			done = true;
