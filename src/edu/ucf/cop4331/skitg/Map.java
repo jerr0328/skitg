@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 
 /**
  * This class holds information on the map where the tanks and weapons interact
- * @author Jeremy Mayeres
+ * 
  *
  */
 public class Map {
@@ -17,16 +17,27 @@ public class Map {
 	
 	// Array index is the x coordinate, value is the y value of the ground level
 	private int[] peaks;
-	Pixmap pixmap;
-	Texture texture;
-	TextureRegion region;
-	float A, B, C, D;
+	// Draws lines and shapes to a texture
+	private Pixmap pixmap;
+	// The texture of the entire map
+	private Texture texture;
+	// The region for the texture to be displayed in
+	private TextureRegion region;
+	// These variables store the values for the map's function (Asin(Bx+C) + D)
+	private float A, B, C, D;
+	// The first minimum point on the map
 	private int minA = 0;
+	// The last minimum point on the map
 	private int minB = 0;
+	// Indicates if the map has changed (such as with a crater)
 	private boolean hasChanged = false;
+	// Indicates if the map needs to display an explosion
 	private boolean hasExplosion = false;
+	// The radius of the explosion
 	private int	explosionRadius = 0;
+	// The x Position of the explosion
 	private int explosionPosX = 0;
+	// The y Position of the explosion
 	private int explosionPosY = 0;
 	
 	/**
@@ -40,6 +51,8 @@ public class Map {
 	
 	/**
 	 * Update the map
+	 * Add newly created craters
+	 * Display explosion animations
 	 * @param delta Time elapsed
 	 */
 	public void update(float delta){
@@ -53,22 +66,22 @@ public class Map {
 			//Since it is larger than the pixmap, it needs to wrap around the edges
 			texture.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
 			
-			//Blue
+			//Blue Sky
 			pixmap.setColor(0.0f, 1.0f, 1.0f, 1.0f);
 			pixmap.fillRectangle(0, 0, Skitg.WIDTH, Skitg.HEIGHT);
 			
-			//Green
+			//Green Land
 			pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
 			//Loops through the array, drawing line by line 
 			for(int i=0; i<peaks.length; i++)
 				pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
 			
+			//If an explosion occurs, draws the explosion and loops again to draw map after explosion
 			if(hasExplosion){
 				pixmap.setColor(Color.RED);
 				pixmap.fillCircle(explosionPosX, explosionPosY, explosionRadius);
 				pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
 				hasExplosion = false;
-				hasChanged = true;
 			}
 			else
 				hasChanged = false;
@@ -86,15 +99,13 @@ public class Map {
 	 * Renders the map
 	 * @param batch Batch handler
 	 */
-	
 	public void render(SpriteBatch batch){
 		batch.draw(region, 0, 0);
 	}
 	
 	/**
-	 * 
 	 * @param x
-	 * @return the y coordinate for the sin function at x
+	 * @return the y coordinate for the original function at x
 	 */
 	public int getHeight(int x){
 		return (int)(A*MathUtils.sinDeg(B*x + C) + D);
@@ -109,9 +120,8 @@ public class Map {
 	}
 	
 	/**
-	 * 
-	 * @param x - the x position that we are looking for an angle for
-	 * @return - The angle 
+	 * @param x - the x position
+	 * @return - the slope at that x position (as an angle)
 	 */
 	public float getAngle(int x){
 		
@@ -160,7 +170,7 @@ public class Map {
 		//Generates a vertical shift of the graph of the terrain
 		D = (float).4*Skitg.HEIGHT;
 		
-		//Loops through the peaks array, populating it with the values from the following equation:
+		//Loops through the peaks array, populating it with the values (Asin(Bx+C)+D)
 		for(int i = 0; i < peaks.length; i++)
 			peaks[i] = getHeight(i);
 		
@@ -174,11 +184,11 @@ public class Map {
 		//Since it is larger than the pixmap, it needs to wrap around the edges
 		texture.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
 		
-		//Blue
+		//Blue Sky
 		pixmap.setColor(0.0f, 1.0f, 1.0f, 1.0f);
 		pixmap.fillRectangle(0, 0, Skitg.WIDTH, Skitg.HEIGHT);
 		
-		//Green
+		//Green Land
 		pixmap.setColor(0.0f, 1.0f, 0.0f, 1.0f);
 		//Loops through the array, drawing line by line 
 		for(int i=0; i<peaks.length; i++){ 
