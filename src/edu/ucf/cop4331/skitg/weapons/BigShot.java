@@ -1,48 +1,40 @@
 package edu.ucf.cop4331.skitg.weapons;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
-import edu.ucf.cop4331.skitg.Skitg;
 import edu.ucf.cop4331.skitg.Tank;
 
+/**
+ * Big shot weapon
+ * Scores 40 points on direct hit
+ * 20 points for shots within 20 px
+ * 10 points for shots within 40 px
+ * 6 points for shots within 60 px
+ * @author Jeremy Mayeres
+ *
+ */
 public class BigShot extends Weapon
 {
 	
-	private TextureRegion tex;
+	/**
+	 * Create the weapon
+	 * @param shooter Shooter tank
+	 * @param tex Texture of weapon
+	 */
 	public BigShot(Tank shooter, TextureRegion tex) {
-		super(shooter);
-		
-		this.tex = tex;
-		// TODO Auto-generated constructor stub
+		super(shooter,tex);
 	}
 
+	@Override
 	public void update(float delta) 
 	{
-		
-		// if statement to make sure that the shot is on the screen width wise 
-		if(done == false)
+		// As long as weapon hasn't finished 
+		if(!done)
 		{
-			
-			velocity.y += GRAVITY * delta;
-			
-			position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
-			bounds.setX(position.x);
-			bounds.setY(position.y);
-			
-			System.out.println("This: " + map.getHeight((int)position.x));
-			System.out.println("X: "+position.x+" Y: "+position.y);
-			System.out.println("Xs: " + shooter.getPosition().x + " Ys: "+shooter.getPosition().y);
-			//System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
-			
+			updatePosition(delta,true);
 			
 			if(detectTankCollision()){
-				System.out.println("Direct hit!");
-				// TODO: Explosions!
-				shooter.score(30);
+				shooter.score(40);
 				done = true;
 				map.destroyTerrain(60, (int)position.x, (int)position.y);
 			}
@@ -50,57 +42,30 @@ public class BigShot extends Weapon
 				System.out.println("Hit ground!");
 				if(detectExplosionRadius(20)){
 					System.out.println("Explosion hit tank!");
-					shooter.score(10);
+					shooter.score(20);
 				}
 				else if(detectExplosionRadius(40)){
 					System.out.println("Explosion hit tank!");
-					shooter.score(5);
+					shooter.score(10);
 				}
 				else if(detectExplosionRadius(60)){
 					System.out.println("Explosion hit tank!");
-					shooter.score(1);
+					shooter.score(6);
 				}				
 				done = true;
 				map.destroyTerrain(60, (int)position.x, (int)position.y);
-				// TODO: Draw explosion
 			}
-			
-			
-			if(done == false)
-			{
-				//If it goes off the screen
-				if(position.x >= Skitg.WIDTH - 5 || position.x <= 0 || position.y <= 0 || position.y >= 1000)
-				{
-					done = true;
-				}
-			}				
 		}
-	}
-
-
-	public void render(SpriteBatch batch) {
-		// Draw
-		batch.draw(tex, position.x, position.y);
-		
 	}
 
 	@Override
 	public void shoot() {
-		
-		
-		velocity = new Vector2(shooter.getPower()* MathUtils.cosDeg(shooter.getAngle()) * POWER_FACTOR , shooter.getPower() * MathUtils.sinDeg(shooter.getAngle()) * POWER_FACTOR);
-		
-		position = new Vector2(shooter.getPosition());
-		bounds = new Rectangle(position.x, position.y, 16,16);
-
-				
-		System.out.println("big shot fired");
-		
-		
+		super.shoot();
+		bounds.setHeight(16);
+		bounds.setWidth(16);		
 	}
-
-
 	
+	@Override
 	public String toString() 
 	{
 		return "Big Shot";

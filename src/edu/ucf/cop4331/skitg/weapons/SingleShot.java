@@ -1,114 +1,72 @@
 package edu.ucf.cop4331.skitg.weapons;
 
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
-import edu.ucf.cop4331.skitg.Skitg;
 import edu.ucf.cop4331.skitg.Tank;
 
-
+/**
+ * Single shot weapon
+ * Scores 20 points on direct hit
+ * 10 points for shots within 10 px
+ * 5 points for shots within 20 px
+ * 3 points for shots within 30 px
+ * @author Jeremy Mayeres
+ *
+ */
 public class SingleShot extends Weapon
 {
 
-	
-	private TextureRegion tex;
-	
+	/**
+	 * Create a Single Shot weapon
+	 * @param shooter Shooter tank
+	 * @param tex Texture of weapon
+	 */
 	public SingleShot(Tank shooter, TextureRegion tex) {
-		super(shooter);
-		this.tex = tex;
-		
+		super(shooter, tex);
 	}	
-	
+
+	@Override
 	public void update(float delta) 
 	{
-		
-		// if statement to make sure that the shot is on the screen width wise 
-				if(done == false  )
-				{
-					
-					velocity.y += GRAVITY * delta;
-					
-					position.add(velocity.x *delta * POWER_FACTOR, velocity.y *delta * POWER_FACTOR);
-					bounds.setX(position.x);
-					bounds.setY(position.y);
-					
-					System.out.println("X: "+position.x+" Y: "+position.y);
-					System.out.println("Xvel: "+velocity.x+" Yvel: "+velocity.y);
-					if(detectTankCollision()){
-						System.out.println("Direct hit!");
+		// As long as weapon hasn't finished
+		if(!done)
+		{
+			updatePosition(delta,true);
 
-						shooter.score(20);
-						done = true;
-						map.destroyTerrain(30, (int)position.x, (int)position.y);
-					}
-					else if(detectGroundCollision()){
-						System.out.println("Hit ground!");
-						if(detectExplosionRadius(10)){
-							System.out.println("Explosion hit tank!");
-							shooter.score(10);
-						}
-						else if(detectExplosionRadius(20)){
-							System.out.println("Explosion hit tank!");
-							shooter.score(5);
-						}
-						else if(detectExplosionRadius(30)){
-							System.out.println("Explosion hit tank!");
-							shooter.score(1);
-						}
-						map.destroyTerrain(30, (int)position.x, (int)position.y);
-						
-						done = true;
-						// TODO: Draw explosion
-					}
-					if(done == false)
-					{
-						if(position.x >= Skitg.WIDTH - 5 || position.x <= 0 || position.y <= 0 || position.y >= 1000)
-						{
-							done = true;
-						}
-						
-						
-					}
-						
-				
+			if(detectTankCollision()){
+				shooter.score(20);
+				done = true;
+				map.destroyTerrain(30, (int)position.x, (int)position.y);
+			}
+			else if(detectGroundCollision()){
+				if(detectExplosionRadius(10)){
+					shooter.score(10);
 				}
+				else if(detectExplosionRadius(20)){
+					shooter.score(5);
+				}
+				else if(detectExplosionRadius(30)){
+					shooter.score(3);
+				}
+				map.destroyTerrain(30, (int)position.x, (int)position.y);
 
-		
-		
-	}
-
-
-	public void render(SpriteBatch batch) {
-		// Draw
-		batch.draw(tex, position.x, position.y);
-		
+				done = true;
+			}
+		}
 	}
 
 	@Override
 	public void shoot() {
-		
-		
-		velocity = new Vector2(shooter.getPower()* MathUtils.cosDeg(shooter.getAngle()) * POWER_FACTOR , shooter.getPower() * MathUtils.sinDeg(shooter.getAngle()) *POWER_FACTOR);
-		
-		position = new Vector2(shooter.getPosition());
-		bounds = new Rectangle(position.x, position.y, 8,8);
-		
-		System.out.println("big shot fired");
-		
-		
+		super.shoot();
+		bounds.setHeight(8);
+		bounds.setWidth(8);
 	}
-
 
 	@Override
 	public String toString() 
 	{
 		return "Single Shot";
 	}
-
-
 
 }
