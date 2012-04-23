@@ -2,71 +2,71 @@ package edu.ucf.cop4331.skitg.ui;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import edu.ucf.cop4331.skitg.Skitg;
 
-public class UIFireButton {
-	private TextureRegion texture;
-	private int x,y;
-	private boolean enabled = true;
+/**
+ * UI component for the fire button
+ * @author Jeremy Mayeres
+ *
+ */
+public class UIFireButton extends UIComponent{
+	
+	// Button pressed state
 	private boolean pressed = false;
+	// Time since press
 	private float stateTime = 0;
 	
+	/**
+	 * Initialize fire button with texture and X/Y coordinates
+	 * @param tex Fire button texture
+	 * @param x X coordinate
+	 * @param y Y coordinate
+	 */
 	public UIFireButton(TextureRegion tex, int x, int y){
-		this.texture = tex;
-		this.x = x;
-		this.y = y;
+		super(tex, x, y);
 	}
 	
+	/**
+	 * Update the button, checking for press
+	 * @param delta Time elapsed
+	 */
+	@Override
 	public void update(float delta){
 		
-		
-		if(Gdx.input.isTouched())
+		// Check if button is enabled and user touched/clicked the screen
+		if(enabled && Gdx.input.isTouched())
 		{						
 			float x0 = Gdx.input.getX(0); // (float)Gdx.graphics.getWidth()) * Skitg.HEIGHT;
 			float y0 = Skitg.HEIGHT - Gdx.input.getY(0); // (float)Gdx.graphics.getHeight()) * Skitg.WIDTH;
-					
+			
+			// Check so we don't have rapid-fire pressing
 			if(stateTime > 0.2f)
 			{
-			
 				stateTime = 0;
 				
+				// Check bounds
 				if(x0 > x && x0 < x+64 && y0 > y && y0 < y + 16)
 					pressed = true;
 			}
 			
 			stateTime += delta;
-		}
-		
-		
-		if(enabled){
-			// TODO: Check if pressed
-		}		
-	}
-	
-	public void render(SpriteBatch batch){
-		if(!enabled){
-			batch.setColor(1,1,1,0.5f);
-		}
-		batch.draw(texture,x,y);
-		batch.setColor(Color.WHITE);
+		}	
 	}
 
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
+	/**
+	 * Get state of button
+	 * @return True if button is pressed, false otherwise
+	 */
 	public boolean isPressed() {
 		return pressed;
 	}
 	
+	/**
+	 * Set the status of the button press
+	 * @param pressed True if pressed, false otherwise
+	 */
 	public void setPressed(boolean pressed){
 		this.pressed = pressed;
 	}

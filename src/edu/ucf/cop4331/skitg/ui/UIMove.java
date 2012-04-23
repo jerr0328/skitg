@@ -10,35 +10,50 @@ import edu.ucf.cop4331.skitg.Skitg;
 
 /**
  * Similar to the UISpinner, but handles moves
- * @author jeremy
+ * @author Jeremy Mayeres
  *
  */
-public class UIMove {
+public class UIMove extends UIComponent{
 	
-	// Texture for the arrows
-	private TextureRegion arrow;
+	/**
+	 * Button state: Not pressed
+	 */
+	public static final int NONE = 0;
+	/**
+	 * Button state: Pressed left
+	 */
+	public static final int LEFT = 1;
+	/**
+	 * Button state: Pressed right
+	 */
+	public static final int RIGHT = 2;
+	
 	// Value of the element
 	private int value;
-	// Coordinates of UI element on the screen
-	private int x,y;
-	// True if enabled, false if disabled
-	private boolean enabled = true;
 	// Font
 	private BitmapFont font;
-	
-	// Used for pressed  button
-	private boolean pressedLeft = false;
-	private boolean pressedRight = false;
+	// State of button
+	private int pressed;
+	// Time since button press
 	private float stateTime;
 
+	/**
+	 * Create the move button
+	 * @param arrow Arrow texture
+	 * @param font Text font
+	 * @param value Initial value
+	 * @param x X Coordinate
+	 * @param y Y Coordinate
+	 */
 	public UIMove(TextureRegion arrow, BitmapFont font, int value, int x, int y){
-		this.arrow = arrow;
+		super(arrow, x, y);
 		this.font = font;
 		this.value = value;
-		this.x = x;
-		this.y = y;
+		
+		pressed = NONE;
 	}
 	
+	@Override
 	public void render(SpriteBatch batch){
 		if(enabled){
 			batch.setColor(Color.BLUE);
@@ -47,61 +62,60 @@ public class UIMove {
 		else{
 			font.setColor(1, 1, 1, 0.5f);
 		}
-		batch.draw(arrow,x,y,4,8,8,16,1,1,180); // Draw left arrow
+		batch.draw(texture,x,y,4,8,8,16,1,1,180); // Draw left arrow
 		font.draw(batch, "Moves: "+value, x+16, y+14);
-		batch.draw(arrow,x+80,y-1); // Draw right arrow
+		batch.draw(texture,x+80,y-1); // Draw right arrow
 		batch.setColor(Color.WHITE);
 	}
 	
+	/**
+	 * Update the component, checking for press
+	 * @param delta Time elapsed
+	 */
+	@Override
 	public void update(float delta){
-		// TODO: Handle the input, update values (do bounds checking), and set/reset timer
-		// Timer is set to like 0.3s, without timer it a single press by the user may increase/decrease value
-		// by many points.
 		
-		if(Gdx.input.isTouched())
+		// Check if button is enabled and user touched/clicked the screen
+		if(enabled && Gdx.input.isTouched())
 		{						
 			float x0 = Gdx.input.getX(0); // (float)Gdx.graphics.getWidth()) * Skitg.HEIGHT;
 			float y0 = Skitg.HEIGHT - Gdx.input.getY(0); // (float)Gdx.graphics.getHeight()) * Skitg.WIDTH;
 					
 			if(stateTime > 0.2f)
 			{
-			
 				stateTime = 0;
 				
 				if(x0 > x && x0 < x+8 && y0 > y && y0 < y + 16 )
-					pressedLeft = true;
+					pressed = LEFT;
 				else if(x0 > x + 80 && x0 < x+88 && y0 > y && y0 < y + 16)
-					pressedRight = true;
+					pressed = RIGHT;
 			}
 			
 			stateTime += delta;
 		}
 	}
-	
-	public int getValue() {
-		return value;
-	}
 
+	/**
+	 * Sets the remaining moves
+	 * @param value Remaining moves
+	 */
 	public void setValue(int value) {
 		this.value = value;
 	}
 	
-	public void setEnabled(boolean flag){
-		this.enabled = flag;
+	/**
+	 * Get the state of the button
+	 * @return Button pressed state
+	 */
+	public int getPressed(){
+		return pressed;
 	}
 	
-	public int isPressed(){
-		if(pressedLeft)
-			return 1;
-		if(pressedRight)
-			return 2;
-		else
-			return 0;
-	}
-	
-	public void unPress(boolean pressed){
-		this.pressedLeft = pressed;
-		this.pressedRight = pressed;
+	/**
+	 * Reset state to NONE
+	 */
+	public void unPress(){
+		this.pressed = NONE;
 	}
 
 }

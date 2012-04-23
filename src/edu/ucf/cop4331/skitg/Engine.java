@@ -280,19 +280,19 @@ public class Engine {
 		}
 		
 		// Handles move
-		if(moves.isPressed() > 0){
+		if(moves.getPressed() != UIMove.NONE){
 			setUIEnabled(false);
 			if(tank.getMoves() > 0)
 			{
-				if(moves.isPressed() == 1)
+				if(moves.getPressed() == UIMove.LEFT)
 					tank.move(true);
-				else if(moves.isPressed() == 2)
+				else if(moves.getPressed() == UIMove.RIGHT)
 					tank.move(false);
 				
 				tank.decMoves();
 			}
 			
-			moves.unPress(false);
+			moves.unPress();
 			setUIValues(tank);
 			setUIEnabled(true);
 		}

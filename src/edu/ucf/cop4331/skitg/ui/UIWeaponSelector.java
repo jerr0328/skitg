@@ -11,43 +11,62 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import edu.ucf.cop4331.skitg.Skitg;
 import edu.ucf.cop4331.skitg.weapons.Weapon;
 
-public class UIWeaponSelector {
-	private int x,y;
-	private boolean enabled = true;
+/**
+ * Weapon selector
+ * @author Jeremy Mayeres
+ *
+ */
+public class UIWeaponSelector extends UIComponent{
+	// Font
 	private BitmapFont font;
+	// Weapons list
 	private List<Weapon> weapons;
-	private int activeWeapon = 0;
+	// Index of active weapon in weapons list
+	private int activeWeapon;
+	// Name of active weapon (as a cache to prevent crashing)
 	private String activeWeaponName;
-	private TextureRegion arrow;
+	// Time since button press
 	private float stateTime = 0;
 	
+	/**
+	 * Create weapon selector component
+	 * @param arrow Arrow texture
+	 * @param font Font
+	 * @param x X Coordinate
+	 * @param y Y Coordinate
+	 * @param weapons Weapons list
+	 */
 	public UIWeaponSelector(TextureRegion arrow, BitmapFont font, int x, int y, List<Weapon> weapons){
-		this.arrow = arrow;
+		super(arrow,x,y);
 		this.font = font;
-		this.x = x;
-		this.y = y;
 		this.weapons = weapons;
-		this.activeWeaponName = weapons.get(activeWeapon).toString();
+		setActiveWeapon(0);
 	}
 	
+	@Override
 	public void render(SpriteBatch batch){
-		if(enabled ){
+		if(enabled){
 			batch.setColor(Color.BLUE);
 			font.setColor(1, 1, 1, 1);
 		}
 		else{
 			font.setColor(1, 1, 1, 0.5f);
 		}
-		batch.draw(arrow,x,y,4,8,8,16,1,1,180); // Draw left arrow
+		batch.draw(texture,x,y,4,8,8,16,1,1,180); // Draw left arrow
 		font.draw(batch, "Weapon: "+activeWeaponName, x+16, y+14);
-		batch.draw(arrow,x+140,y-1); // Draw right arrow
+		batch.draw(texture,x+140,y-1); // Draw right arrow
 
 		batch.setColor(Color.WHITE);
 	}
-	
+	/**
+	 * Update the component, checking for press
+	 * @param delta Time elapsed
+	 */
+	@Override
 	public void update(float delta){
 		
-		if(Gdx.input.isTouched())
+		// Check if button is enabled and user touched/clicked the screen
+		if(enabled && Gdx.input.isTouched())
 		{						
 			float x0 = Gdx.input.getX(0); // (float)Gdx.graphics.getWidth()) * Skitg.HEIGHT;
 			float y0 = Skitg.HEIGHT - Gdx.input.getY(0); // (float)Gdx.graphics.getHeight()) * Skitg.WIDTH;
@@ -67,22 +86,29 @@ public class UIWeaponSelector {
 		}
 	}
 
+	/**
+	 * Get index of active weapon
+	 * @return Index of active weapon
+	 */
 	public int getActiveWeapon() {
 		return activeWeapon;
 	}
 
+	/**
+	 * Set the active weapon
+	 * @param activeWeapon Index of weapon
+	 */
 	public void setActiveWeapon(int activeWeapon) {
 		this.activeWeapon = activeWeapon;
 		this.activeWeaponName = weapons.get(activeWeapon).toString();
 	}
 
+	/**
+	 * Set the list of weapons
+	 * @param weapons Weapons list
+	 */
 	public void setWeapons(List<Weapon> weapons) {
 		this.weapons = weapons;
 	}
-	
-	public void setEnabled(boolean flag){
-		this.enabled = flag;
-	}
-	
 	
 }
