@@ -115,7 +115,10 @@ public class Map {
 	 * @return the y coordinate at given x
 	 */
 	public int getPeaksY(int x){
-		return peaks[x];
+		if(!(x < 0 || x > Skitg.WIDTH))
+			return peaks[x];
+		else
+			return 0;
 	}
 	
 	/**
