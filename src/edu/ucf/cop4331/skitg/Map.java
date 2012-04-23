@@ -9,8 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 
 /**
  * This class holds information on the map where the tanks and weapons interact
- * 
- *
+ * @author Jeremy Mayeres
  */
 public class Map {
 
