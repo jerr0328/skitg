@@ -20,9 +20,9 @@ public class Laser extends Weapon {
 	 */
 	public Laser(Tank shooter, TextureRegion tex) {
 		super(shooter,tex);
+		color = shooter.getColor();
 	}
 
-	@Override
 	public void update(float delta) 
 	{
 		// As long as weapon hasn't finished
@@ -37,14 +37,13 @@ public class Laser extends Weapon {
 		}
 	}
 
-	@Override
 	public void shoot() {
 		super.shoot();
 		bounds.setHeight(8);
 		bounds.setWidth(2);
 	}
 
-	@Override
+	
 	public String toString() {
 		return "Laser";
 	}

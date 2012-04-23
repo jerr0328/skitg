@@ -311,5 +311,13 @@ public class Tank {
 	public Rectangle getBounds(){
 		return bounds;
 	}
+	
+	/**
+	 * Get the tank's color
+	 * @return Color
+	 */
+	public Color getColor(){
+		return color;
+	}
 
 }

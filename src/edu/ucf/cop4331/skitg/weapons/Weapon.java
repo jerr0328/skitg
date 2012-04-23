@@ -1,5 +1,6 @@
 package edu.ucf.cop4331.skitg.weapons;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
@@ -64,6 +65,10 @@ public abstract class Weapon {
 	 * Texture
 	 */
 	protected TextureRegion texture;
+	/**
+	 * Color - Default White
+	 */
+	protected Color color = Color.WHITE;
 
 	/**
 	 * Create the weapon
@@ -95,7 +100,9 @@ public abstract class Weapon {
 	 * @param batch Batch handler
 	 */
 	public void render(SpriteBatch batch){
+		batch.setColor(color);
 		batch.draw(texture, position.x, position.y);
+		batch.setColor(Color.WHITE);
 	}
 	
 	/**
