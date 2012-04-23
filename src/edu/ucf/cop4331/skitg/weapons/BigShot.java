@@ -39,17 +39,13 @@ public class BigShot extends Weapon
 				map.destroyTerrain(60, (int)position.x, (int)position.y);
 			}
 			else if(detectGroundCollision()){
-				System.out.println("Hit ground!");
 				if(detectExplosionRadius(20)){
-					System.out.println("Explosion hit tank!");
 					shooter.score(20);
 				}
 				else if(detectExplosionRadius(40)){
-					System.out.println("Explosion hit tank!");
 					shooter.score(10);
 				}
 				else if(detectExplosionRadius(60)){
-					System.out.println("Explosion hit tank!");
 					shooter.score(6);
 				}				
 				done = true;

@@ -38,6 +38,7 @@ public class HeatSeeker extends Weapon {
 			if(detectTankCollision()){
 				shooter.score(30);
 				done = true;
+				map.destroyTerrain(30, (int)position.x, (int)position.y);
 			}
 			else if(detectGroundCollision()){
 				System.out.println("Hit ground!");

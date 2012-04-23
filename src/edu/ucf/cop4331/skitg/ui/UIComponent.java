@@ -34,6 +34,8 @@ public abstract class UIComponent {
 		this.texture = texture;
 		this.x = x;
 		this.y = y;
+		
+		enabled = true;
 	}
 	
 	/**
