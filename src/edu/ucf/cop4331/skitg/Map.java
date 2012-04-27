@@ -39,6 +39,16 @@ public class Map {
 	// The y Position of the explosion
 	private int explosionPosY = 0;
 	
+	
+	//New Random Generator Test
+	private double rand1 = MathUtils.random() + 1;
+    private double rand2 = MathUtils.random() + 2;
+    private double rand3 = MathUtils.random() + 3;
+    
+    float offset = Skitg.HEIGHT / 2;
+    float peakheight = 100;
+    float flatness = 70;
+	
 	/**
 	 * Create the map
 	 */
@@ -127,7 +137,6 @@ public class Map {
 	 */
 	public float getAngle(int x){
 		
-		
 		float angle = MathUtils.atan2(1, (peaks[x-1] - peaks[x+1]))*MathUtils.radiansToDegrees;
 		//All angles are 0 <= angle <= 360
 		while(angle > 360)
@@ -145,9 +154,9 @@ public class Map {
 	 */
 	public int getMinimum(boolean first){
 		if (first)
-			return minA+1;
+			return minA;
 		else 
-			return minB-1;		
+			return minB;		
 	}
 	
 	/**
@@ -158,6 +167,7 @@ public class Map {
 	 */	
 	private void generateTerrain(){
 		
+		/*
 		//The total terrain will occupy 50% of the screen (vertically and after applying D)
 		A = MathUtils.random(50, (float).25*Skitg.HEIGHT);
 		
@@ -172,9 +182,29 @@ public class Map {
 		//Generates a vertical shift of the graph of the terrain
 		D = (float).4*Skitg.HEIGHT;
 		
-		//Loops through the peaks array, populating it with the values (Asin(Bx+C)+D)
+		Loops through the peaks array, populating it with the values (Asin(Bx+C)+D)
 		for(int i = 0; i < peaks.length; i++)
 			peaks[i] = getHeight(i);
+		*/
+		
+		for (int x = 0; x < Skitg.WIDTH; x++)
+	     {
+	         double height = peakheight / rand1 * MathUtils.sin((float)(x / flatness * rand1 + rand1));
+	         height += peakheight / rand2 * MathUtils.sin((float)(x / flatness * rand2 + rand2));
+	         height += peakheight / rand3 * MathUtils.sin((float)(x / flatness * rand3 + rand3));
+	         height += offset;
+	         peaks[x] = (int)height;
+	     }
+		
+		minA = Skitg.WIDTH/6;
+		minB = 5*Skitg.WIDTH/6;
+		
+		//Flatten the ground under each tank
+		for(int i=0; i<32; i++) {
+			peaks[minA + i] = peaks[minA];
+			peaks[minB + i] = peaks[minB];
+		}
+		
 		
 		//New Pixmap with the width and height of the screen.
 		pixmap = new Pixmap(Skitg.WIDTH, Skitg.HEIGHT, Pixmap.Format.RGB888);
@@ -195,14 +225,6 @@ public class Map {
 		//Loops through the array, drawing line by line 
 		for(int i=0; i<peaks.length; i++){ 
 			pixmap.drawLine(i, Skitg.HEIGHT, i, Skitg.HEIGHT - peaks[i]);
-			
-			//Finds the minimum points so the tanks can start there
-			if(i > 16 && i < Skitg.WIDTH - 16 && peaks[i] == (int)((-1*A) + D)){
-				if(minA == 0)
-					minA = i;
-				else
-					minB = i;
-			}
 		}
 
 		//Draws the pixmap to the texture

@@ -102,8 +102,8 @@ public class Engine {
 		int tank1x = map.getMinimum(true);
 		int tank2x = map.getMinimum(false);
 		
-		tank1 = new Tank(texTank, texCannon, texWeapons, true, tank1x, map.getHeight(tank1x), map);
-		tank2 = new Tank(texTank, texCannon, texWeapons, false, tank2x, map.getHeight(tank2x), map);
+		tank1 = new Tank(texTank, texCannon, texWeapons, true, tank1x, map.getPeaksY(tank1x), map);
+		tank2 = new Tank(texTank, texCannon, texWeapons, false, tank2x, map.getPeaksY(tank2x), map);
 		
 		tank1active = true;
 		volleys = 5;
